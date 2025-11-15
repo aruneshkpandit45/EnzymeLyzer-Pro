@@ -1,0 +1,10 @@
+"Sample_ID","Microorganism","Replicate","Absorbance_595nm"
+"P1","Org_A",1,0.145
+"P1","Org_A",2,0.152
+"P1","Org_A",3,0.148
+"P2","Org_B",1,0.238
+"P2","Org_B",2,0.245
+"P2","Org_B",3,0.24
+"P3","Org_C",1,0.332
+"P3","Org_C",2,0.34
+"P3","Org_C",3,0.336

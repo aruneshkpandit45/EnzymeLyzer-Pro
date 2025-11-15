@@ -1,0 +1,10 @@
+"Sample_ID","Microorganism","Replicate","Absorbance","Blank_Absorbance"
+"E1","Org_A",1,0.45,0.05
+"E1","Org_A",2,0.465,0.05
+"E1","Org_A",3,0.455,0.05
+"E2","Org_B",1,0.38,0.05
+"E2","Org_B",2,0.395,0.05
+"E2","Org_B",3,0.385,0.05
+"E3","Org_C",1,0.52,0.05
+"E3","Org_C",2,0.535,0.05
+"E3","Org_C",3,0.528,0.05

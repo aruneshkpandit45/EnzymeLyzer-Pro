@@ -1,0 +1,10 @@
+"Sample_ID","Microorganism","Replicate","Colony_Diameter_mm","Zone_Diameter_mm"
+"Q1","Org_A",1,5,15.2
+"Q1","Org_A",2,5.2,14.8
+"Q1","Org_A",3,5.1,15
+"Q2","Org_B",1,4.8,12.5
+"Q2","Org_B",2,5.1,13
+"Q2","Org_B",3,4.9,12.7
+"Q3","Org_C",1,5.3,18.5
+"Q3","Org_C",2,5,17.8
+"Q3","Org_C",3,5.2,18.2
