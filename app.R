@@ -72,7 +72,7 @@ lab_name <- "Molecular Entomology Laboratory"
 # ===== USER INTERFACE =====
 ui <- fluidPage(
   
-  # ===== UPDATED CSS FOR HEADER WITH HORIZONTAL TABS =====
+  # ===== CSS FOR HEADER WITH HORIZONTAL TABS =====
   tags$style(HTML("
     .enzyme-header {
       background: linear-gradient(135deg, #ecf0f1 0%, #f8f9f9 100%);
@@ -526,7 +526,7 @@ server <- function(input, output, session) {
   specific_activity_results <- reactiveVal(NULL)
   qualitative_results <- reactiveVal(NULL)
   
-  # ===== PASTE YOUR COMPLETE ORIGINAL SERVER CODE HERE =====
+
   output$dl_protein_standards_template <- downloadHandler(
     filename = "bradford_standards.csv",
     content = function(file) {
@@ -1112,3 +1112,4 @@ server <- function(input, output, session) {
 # ===== LAUNCH =====
 
 shinyApp(ui = ui, server = server)
+
