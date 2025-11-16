@@ -1,13 +1,10 @@
 # EnzymeLyzer Pro
 # Professional Enzyme Assay Analysis Platform
-# 
 # Developer Information:
 # - Arunesh Kumar (Lead Developer, IARI New Delhi, Entomology)
 # - Dr. S. Subramanian (Principal Advisor & Co-Developer)
-#
 # Version: 1.0.0 (Production Ready)
 # License: MIT
-# Logo: Concept 1 - Molecular Structure Design
 # Last Updated: November 2025
 
 library(shiny)
@@ -17,7 +14,6 @@ library(tidyr)
 library(DT)
 
 # ===== ENZYME CONFIGURATION =====
-
 enzyme_config <- list(
   Cellulase = list(
     standard_product = "Glucose",
@@ -64,70 +60,131 @@ enzyme_config <- list(
 )
 
 # ===== DEVELOPER INFORMATION =====
-
 your_name <- "Arunesh Kumar"
 your_institution <- "Indian Agricultural Research Institute, New Delhi"
 your_department <- "Department of Entomology"
 your_email <- "akpandit.iari@gmail.com"
 your_github <- "aruneshkpandit45"
-
-advisor_name <- "Dr. S. Subramanian (Principal Scientist and Professor Division of Entomology ICAR-IARI New DElhi)"
+advisor_name <- "Dr. S. Subramanian (Principal Scientist and Professor Division of Entomology ICAR-IARI New Delhi)"
 advisor_email <- "entosubra@yahoo.co.in"
 lab_name <- "Molecular Entomology Laboratory"
 
 # ===== USER INTERFACE =====
-
 ui <- fluidPage(
-  # Logo styling CSS
+  
+  # ===== UPDATED CSS FOR HEADER WITH HORIZONTAL TABS =====
   tags$style(HTML("
     .enzyme-header {
+      background: linear-gradient(135deg, #ecf0f1 0%, #f8f9f9 100%);
+      padding: 25px 30px;
+      border-bottom: 3px solid #2980b9;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      border-radius: 8px;
+    }
+    
+    .enzyme-header-top {
       display: flex;
       align-items: center;
       justify-content: flex-start;
-      background: linear-gradient(135deg, #ecf0f1 0%, #f8f9f9 100%);
-      padding: 18px 30px 18px 30px;
-      border-bottom: 3px solid #2980b9;
-      margin-bottom: 0px;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
     }
+    
     .enzyme-header img {
-      height: 156px;
-      margin-right: 0px;
-  vertical-align: middle;
-  max-width: 100%;
-  width: auto;
+      height: 56px;
+      margin-right: 14px;
+      vertical-align: middle;
+      max-width: 100%;
+      width: auto;
     }
+    
     .enzyme-title {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
+    
     .enzyme-title h1 {
-    color: #2c3e50;
-    margin: 0;
-    font-weight: bold;
-    font-size: 2.1em;
-    line-height: 1.1;
-  }
-  .enzyme-title p {
-    color: #16a085;
-    margin: 0;
-    font-size: 1.05em;
-    font-weight: bold;
-    padding-left: 2px;
+      color: #2c3e50;
+      margin: 0;
+      font-weight: bold;
+      font-size: 2.1em;
+      line-height: 1.1;
+    }
+    
+    .enzyme-title p {
+      color: #16a085;
+      margin: 0;
+      font-size: 1.05em;
+      font-weight: bold;
+      padding-left: 2px;
+    }
+    
+    .enzyme-header-tabs {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 8px;
+      padding-top: 15px;
+      border-top: 2px solid rgba(41, 128, 185, 0.2);
+      overflow-x: auto;
+    }
+    
+    .enzyme-header-tabs a {
+      display: inline-block;
+      padding: 8px 14px;
+      background-color: rgba(255, 255, 255, 0.6);
+      color: #2980b9 !important;
+      text-decoration: none;
+      border-radius: 4px;
+      font-size: 0.9em;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(41, 128, 185, 0.3);
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    
+    .enzyme-header-tabs a:hover {
+      background-color: #2980b9;
+      color: white !important;
+      transform: translateY(-2px);
+      box-shadow: 0 2px 8px rgba(41, 128, 185, 0.3);
+    }
+    
+    .enzyme-header-tabs a.active {
+      background-color: #2980b9;
+      color: white !important;
+      border: 1px solid #2980b9;
+      font-weight: 600;
+    }
+    
+    .nav-tabs {
+      display: none !important;
     }
   ")),
   
-  # Logo header
+  # ===== HEADER WITH TABS =====
   div(class = "enzyme-header",
-    img(src = "enzymelyzer_logo.png", alt = "EnzymeLyzer Pro Logo"),
-    div(class = "enzyme-title",
-      h1("EnzymeLyzer Pro"),
-      p("Quantitative Enzyme Assay Analysis Platform")
+    div(class = "enzyme-header-top",
+      img(src = "enzymelyzer_logo.png", alt = "EnzymeLyzer Pro Logo"),
+      div(class = "enzyme-title",
+        h1("EnzymeLyzer Pro"),
+        p("Quantitative Enzyme Assay Analysis Platform")
+      )
+    ),
+    div(class = "enzyme-header-tabs",
+      a(href = "#", class = "nav-link active", onclick = "$('[data-value=\"About\"]').click(); return false;", "About"),
+      a(href = "#", class = "nav-link", onclick = "$('[data-value=\"1. Protein Estimation\"]').click(); return false;", "1. Protein Estimation"),
+      a(href = "#", class = "nav-link", onclick = "$('[data-value=\"2. Enzyme Activity\"]').click(); return false;", "2. Enzyme Activity"),
+      a(href = "#", class = "nav-link", onclick = "$('[data-value=\"3. Product Concentration\"]').click(); return false;", "3. Product Concentration"),
+      a(href = "#", class = "nav-link", onclick = "$('[data-value=\"4. Specific Activity\"]').click(); return false;", "4. Specific Activity"),
+      a(href = "#", class = "nav-link", onclick = "$('[data-value=\"5. Replication Quality\"]').click(); return false;", "5. Replication Quality"),
+      a(href = "#", class = "nav-link", onclick = "$('[data-value=\"6. Statistics & Plots\"]').click(); return false;", "6. Statistics & Plots"),
+      a(href = "#", class = "nav-link", onclick = "$('[data-value=\"7. Qualitative Analysis\"]').click(); return false;", "7. Qualitative Analysis")
     )
   ),
   
+  # ===== REST OF APP - KEEP ORIGINAL CODE FROM HERE ONWARDS =====
   sidebarLayout(
     sidebarPanel(
       width = 3,
@@ -145,324 +202,322 @@ ui <- fluidPage(
         tags$li("Qualitative Analysis")
       )
     ),
-
+    
     mainPanel(
       width = 9,
+      
       tabsetPanel(
-        # ===== ABOUT TAB =====
         tabPanel("About",
-          #div(style = "text-align: center; margin-bottom: 30px;",
-           # img(src = "enzymelyzer_logo.png", height = "120px", alt = "EnzymeLyzer Pro Logo")),
-          
-          h2("EnzymeLyzer Pro - Professional Enzyme Analysis Platform", style = "color: #2980b9; text-align: center;"),
-          
-          hr(style = "border-top: 2px solid #2980b9;"),
-          
-          h3("Overview", style = "color: #2980b9;"),
-          p("EnzymeLyzer Pro is a comprehensive web-based analytical platform for quantitative enzyme assay analysis. 
+                 #div(style = "text-align: center; margin-bottom: 30px;",
+                 # img(src = "enzymelyzer_logo.png", height = "120px", alt = "EnzymeLyzer Pro Logo")),
+                 
+                 h2("EnzymeLyzer Pro - Professional Enzyme Analysis Platform", style = "color: #2980b9; text-align: center;"),
+                 
+                 hr(style = "border-top: 2px solid #2980b9;"),
+                 
+                 h3("Overview", style = "color: #2980b9;"),
+                 p("EnzymeLyzer Pro is a comprehensive web-based analytical platform for quantitative enzyme assay analysis. 
             Designed for research laboratories, the application provides automated data processing, statistical analysis, 
             and publication-quality visualizations for enzyme characterization studies."),
-          
-          h4("Core Features", style = "color: #34495e;"),
-          tags$ul(
-            tags$li(strong("Multi-Replication Support:"), "Complete analysis with 3 or more replicates per sample"),
-            tags$li(strong("Specific Activity Normalization:"), "Enzyme activity normalized to protein (U/mg)"),
-            tags$li(strong("Statistical Framework:"), "ANOVA with Tukey HSD post-hoc testing"),
-            tags$li(strong("Multiple Enzyme Support:"), "Pre-configured for 6 common enzymes"),
-            tags$li(strong("Publication-Ready Output:"), "Error bar plots with statistical grouping"),
-            tags$li(strong("Quality Control:"), "R² and CV% assessment metrics")
-          ),
-          
-          hr(style = "border-top: 2px solid #2980b9;"),
-          
-          h3("Methodology", style = "color: #2980b9;"),
-          
-          h4("Protein Quantification", style = "color: #34495e;"),
-          p("Bradford assay-based protein quantification. Linear regression of 15-point standard curves (5 concentrations × 3 replicates)."),
-          
-          h4("Enzyme Activity Measurement", style = "color: #34495e;"),
-          p("Enzyme-specific assays with automated blank correction and reaction time normalization."),
-          
-          h4("Specific Activity Calculation", style = "color: #34495e;"),
-          p("Specific Activity (U/mg) = Enzyme Activity (U/mL) / Protein Concentration (mg/mL)"),
-          p(em("Volume-independent normalization enabling valid cross-comparison of enzyme efficiency."), style = "color: #7f8c8d;"),
-          
-          h4("Statistical Analysis Methods", style = "color: #34495e;"),
-          tags$ul(
-            tags$li("One-way ANOVA for group comparisons"),
-            tags$li("Tukey HSD test for pairwise comparisons (α = 0.05)"),
-            tags$li("Coefficient of Variation (CV%) for precision assessment"),
-            tags$li("95% Confidence Intervals for means")
-          ),
-          
-          hr(style = "border-top: 2px solid #2980b9;"),
-          
-          h3("Publication & Citation", style = "color: #2980b9;"),
-          
-          h4("Recommended Citation", style = "color: #34495e;"),
-          div(style = "background-color: #ecf0f1; padding: 15px; border-left: 4px solid #2980b9; border-radius: 5px; margin: 15px 0;",
-            p("EnzymeLyzer Pro v1.0: A web-based platform for quantitative enzyme assay analysis with replication support and statistical validation.", 
-              style = "margin: 0; font-size: 14px; font-style: italic;")
-          ),
-          
-          hr(style = "border-top: 2px solid #2980b9;"),
-          
-          h3("Development Team", style = "color: #2980b9;"),
-          
-          h4("Lead Developer", style = "color: #34495e;"),
-          div(style = "background-color: #e8f4f8; padding: 15px; border-radius: 5px; margin: 10px 0;",
-            p(strong("Name:"), your_name, br(),
-              strong("Institution:"), your_institution, br(),
-              strong("Department:"), your_department, br(),
-              strong("Email:"), a(your_email, href = paste0("mailto:", your_email), style = "color: #2980b9;"), br(),
-              strong("GitHub:"), a(your_github, href = paste0("https://github.com/", your_github), target = "_blank", style = "color: #2980b9;"),
-              style = "line-height: 1.8; margin: 0;")
-          ),
-          
-          h4("Principal Advisor & Co-Developer", style = "color: #34495e;"),
-          div(style = "background-color: #fef9e7; padding: 15px; border-radius: 5px; margin: 10px 0;",
-            p(strong("Name:"), advisor_name, br(),
-              strong("Affiliation:"), lab_name, br(),
-              strong("Email:"), a(advisor_email, href = paste0("mailto:", advisor_email), style = "color: #2980b9;"), br(),
-              strong("Role:"), "Research guidance and methodology development",
-              style = "line-height: 1.8; margin: 0;")
-          ),
-          
-          hr(style = "border-top: 2px solid #2980b9;"),
-          
-          h3("Technical Support", style = "color: #2980b9;"),
-          p("For bug reports and feature requests, please contact:"),
-          tags$ul(
-            tags$li("Email: ", a(your_email, href = paste0("mailto:", your_email))),
-            tags$li("Advisor: ", a(advisor_email, href = paste0("mailto:", advisor_email)))
-          ),
-          
-          hr(style = "border-top: 2px solid #2980b9;"),
-          
-          h3("Version Information", style = "color: #2980b9;"),
-          p(strong("Version:"), "1.0.0", br(),
-            strong("Release Date:"), "November 2025", br(),
-            strong("License:"), "MIT License", br(),
-            strong("Logo:"), "Concept 1 - Molecular Structure Design",
-            style = "line-height: 1.8;"),
-          
-          hr(style = "border-top: 2px solid #2980b9;"),
-          
-          div(style = "text-align: center; color: #7f8c8d; padding: 20px;",
-            p(strong("EnzymeLyzer Pro v1.0.0"), br(),
-              "© 2025 - MIT License", br(),
-              "Developed by Arunesh Kumar & Dr. S. Subramanian")
-          )
+                 
+                 h4("Core Features", style = "color: #34495e;"),
+                 tags$ul(
+                   tags$li(strong("Multi-Replication Support:"), "Complete analysis with 3 or more replicates per sample"),
+                   tags$li(strong("Specific Activity Normalization:"), "Enzyme activity normalized to protein (U/mg)"),
+                   tags$li(strong("Statistical Framework:"), "ANOVA with Tukey HSD post-hoc testing"),
+                   tags$li(strong("Multiple Enzyme Support:"), "Pre-configured for 6 common enzymes"),
+                   tags$li(strong("Publication-Ready Output:"), "Error bar plots with statistical grouping"),
+                   tags$li(strong("Quality Control:"), "R² and CV% assessment metrics")
+                 ),
+                 
+                 hr(style = "border-top: 2px solid #2980b9;"),
+                 
+                 h3("Methodology", style = "color: #2980b9;"),
+                 
+                 h4("Protein Quantification", style = "color: #34495e;"),
+                 p("Bradford assay-based protein quantification. Linear regression of 15-point standard curves (5 concentrations × 3 replicates)."),
+                 
+                 h4("Enzyme Activity Measurement", style = "color: #34495e;"),
+                 p("Enzyme-specific assays with automated blank correction and reaction time normalization."),
+                 
+                 h4("Specific Activity Calculation", style = "color: #34495e;"),
+                 p("Specific Activity (U/mg) = Enzyme Activity (U/mL) / Protein Concentration (mg/mL)"),
+                 p(em("Volume-independent normalization enabling valid cross-comparison of enzyme efficiency."), style = "color: #7f8c8d;"),
+                 
+                 h4("Statistical Analysis Methods", style = "color: #34495e;"),
+                 tags$ul(
+                   tags$li("One-way ANOVA for group comparisons"),
+                   tags$li("Tukey HSD test for pairwise comparisons (α = 0.05)"),
+                   tags$li("Coefficient of Variation (CV%) for precision assessment"),
+                   tags$li("95% Confidence Intervals for means")
+                 ),
+                 
+                 hr(style = "border-top: 2px solid #2980b9;"),
+                 
+                 h3("Publication & Citation", style = "color: #2980b9;"),
+                 
+                 h4("Recommended Citation", style = "color: #34495e;"),
+                 div(style = "background-color: #ecf0f1; padding: 15px; border-left: 4px solid #2980b9; border-radius: 5px; margin: 15px 0;",
+                     p("EnzymeLyzer Pro v1.0: A web-based platform for quantitative enzyme assay analysis with replication support and statistical validation.", 
+                       style = "margin: 0; font-size: 14px; font-style: italic;")
+                 ),
+                 
+                 hr(style = "border-top: 2px solid #2980b9;"),
+                 
+                 h3("Development Team", style = "color: #2980b9;"),
+                 
+                 h4("Lead Developer", style = "color: #34495e;"),
+                 div(style = "background-color: #e8f4f8; padding: 15px; border-radius: 5px; margin: 10px 0;",
+                     p(strong("Name:"), your_name, br(),
+                       strong("Institution:"), your_institution, br(),
+                       strong("Department:"), your_department, br(),
+                       strong("Email:"), a(your_email, href = paste0("mailto:", your_email), style = "color: #2980b9;"), br(),
+                       strong("GitHub:"), a(your_github, href = paste0("https://github.com/", your_github), target = "_blank", style = "color: #2980b9;"),
+                       style = "line-height: 1.8; margin: 0;")
+                 ),
+                 
+                 h4("Principal Advisor & Co-Developer", style = "color: #34495e;"),
+                 div(style = "background-color: #fef9e7; padding: 15px; border-radius: 5px; margin: 10px 0;",
+                     p(strong("Name:"), advisor_name, br(),
+                       strong("Affiliation:"), lab_name, br(),
+                       strong("Email:"), a(advisor_email, href = paste0("mailto:", advisor_email), style = "color: #2980b9;"), br(),
+                       strong("Role:"), "Research guidance and methodology development",
+                       style = "line-height: 1.8; margin: 0;")
+                 ),
+                 
+                 hr(style = "border-top: 2px solid #2980b9;"),
+                 
+                 h3("Technical Support", style = "color: #2980b9;"),
+                 p("For bug reports and feature requests, please contact:"),
+                 tags$ul(
+                   tags$li("Email: ", a(your_email, href = paste0("mailto:", your_email))),
+                   tags$li("Advisor: ", a(advisor_email, href = paste0("mailto:", advisor_email)))
+                 ),
+                 
+                 hr(style = "border-top: 2px solid #2980b9;"),
+                 
+                 h3("Version Information", style = "color: #2980b9;"),
+                 p(strong("Version:"), "1.0.0", br(),
+                   strong("Release Date:"), "November 2025", br(),
+                   strong("License:"), "MIT License", br(),
+                   style = "line-height: 1.8;"),
+                 
+                 hr(style = "border-top: 2px solid #2980b9;"),
+                 
+                 div(style = "text-align: center; color: #7f8c8d; padding: 20px;",
+                     p(strong("EnzymeLyzer Pro v1.0.0"), br(),
+                       "© 2025 - MIT License", br(),
+                       "Developed by Arunesh Kumar & Dr. S. Subramanian")
+                 )
         ),
         
         # ===== TAB 1: PROTEIN ESTIMATION =====
         tabPanel("1. Protein Estimation",
-          h3("Bradford Protein Assay"),
-          
-          fluidRow(
-            column(6,
-              h4("Standard Curve", style = "color: #2980b9;"),
-              p("15-point calibration (5 concentrations × 3 replicates)", style = "color: #7f8c8d;"),
-              fileInput("protein_standards_file", "Upload Standards CSV"),
-              downloadButton("dl_protein_standards_template", "Download Template", class = "btn-info"),
-              br(), br(),
-              plotOutput("protein_calibration_plot", height = "300px"),
-              verbatimTextOutput("protein_calib_eq")
-            ),
-            
-            column(6,
-              h4("Sample Analysis", style = "color: #2980b9;"),
-              p("Protein concentration in test samples", style = "color: #7f8c8d;"),
-              fileInput("protein_samples_file", "Upload Sample Data CSV"),
-              downloadButton("dl_protein_samples_template", "Download Template", class = "btn-info"),
-              br(), br(),
-              actionButton("calc_protein", "Calculate", class = "btn-success btn-block"),
-              br(), br(),
-              downloadButton("dl_protein_results", "Export Results", class = "btn-success")
-            )
-          ),
-          
-          hr(),
-          h4("Results"),
-          DTOutput("protein_results_table"),
-          hr(),
-          h4("Summary Statistics"),
-          DTOutput("protein_stats_table")
+                 h3("Bradford Protein Assay"),
+                 
+                 fluidRow(
+                   column(6,
+                          h4("Standard Curve", style = "color: #2980b9;"),
+                          p("15-point calibration (5 concentrations × 3 replicates)", style = "color: #7f8c8d;"),
+                          fileInput("protein_standards_file", "Upload Standards CSV"),
+                          downloadButton("dl_protein_standards_template", "Download Template", class = "btn-info"),
+                          br(), br(),
+                          plotOutput("protein_calibration_plot", height = "300px"),
+                          verbatimTextOutput("protein_calib_eq")
+                   ),
+                   
+                   column(6,
+                          h4("Sample Analysis", style = "color: #2980b9;"),
+                          p("Protein concentration in test samples", style = "color: #7f8c8d;"),
+                          fileInput("protein_samples_file", "Upload Sample Data CSV"),
+                          downloadButton("dl_protein_samples_template", "Download Template", class = "btn-info"),
+                          br(), br(),
+                          actionButton("calc_protein", "Calculate", class = "btn-success btn-block"),
+                          br(), br(),
+                          downloadButton("dl_protein_results", "Export Results", class = "btn-success")
+                   )
+                 ),
+                 
+                 hr(),
+                 h4("Results"),
+                 DTOutput("protein_results_table"),
+                 hr(),
+                 h4("Summary Statistics"),
+                 DTOutput("protein_stats_table")
         ),
         
         # ===== TAB 2: ENZYME ACTIVITY =====
         tabPanel("2. Enzyme Activity",
-          h3("Enzyme Activity Assay"),
-          
-          fluidRow(
-            column(6,
-              h4("Standard Curve", style = "color: #2980b9;"),
-              p(textOutput("enzyme_info_display1")),
-              p(textOutput("enzyme_product_display")),
-              p(textOutput("enzyme_wavelength_display"), style = "color: #7f8c8d;"),
-              fileInput("enzyme_standards_file", "Upload Standards CSV"),
-              downloadButton("dl_enzyme_template", "Download Template", class = "btn-info"),
-              br(), br(),
-              plotOutput("enzyme_calibration_plot", height = "300px"),
-              verbatimTextOutput("enzyme_calib_eq")
-            ),
-            
-            column(6,
-              h4("Assay Data", style = "color: #2980b9;"),
-              p("Activity calculation with blank correction", style = "color: #7f8c8d;"),
-              fileInput("enzyme_assay_file", "Upload Assay Data CSV"),
-              downloadButton("dl_enzyme_assay_template", "Download Template", class = "btn-info"),
-              br(), br(),
-              numericInput("reaction_time_user", "Reaction Time (min):", 30, 1),
-              br(),
-              actionButton("calc_enzyme", "Calculate", class = "btn-success btn-block")
-            )
-          ),
-          
-          hr(),
-          h4("Results"),
-          DTOutput("enzyme_activity_table"),
-          br(),
-          downloadButton("dl_enzyme_activity", "Export", class = "btn-success"),
-          hr(),
-          h4("Summary Statistics"),
-          DTOutput("enzyme_activity_stats_table")
+                 h3("Enzyme Activity Assay"),
+                 
+                 fluidRow(
+                   column(6,
+                          h4("Standard Curve", style = "color: #2980b9;"),
+                          p(textOutput("enzyme_info_display1")),
+                          p(textOutput("enzyme_product_display")),
+                          p(textOutput("enzyme_wavelength_display"), style = "color: #7f8c8d;"),
+                          fileInput("enzyme_standards_file", "Upload Standards CSV"),
+                          downloadButton("dl_enzyme_template", "Download Template", class = "btn-info"),
+                          br(), br(),
+                          plotOutput("enzyme_calibration_plot", height = "300px"),
+                          verbatimTextOutput("enzyme_calib_eq")
+                   ),
+                   
+                   column(6,
+                          h4("Assay Data", style = "color: #2980b9;"),
+                          p("Activity calculation with blank correction", style = "color: #7f8c8d;"),
+                          fileInput("enzyme_assay_file", "Upload Assay Data CSV"),
+                          downloadButton("dl_enzyme_assay_template", "Download Template", class = "btn-info"),
+                          br(), br(),
+                          numericInput("reaction_time_user", "Reaction Time (min):", 30, 1),
+                          br(),
+                          actionButton("calc_enzyme", "Calculate", class = "btn-success btn-block")
+                   )
+                 ),
+                 
+                 hr(),
+                 h4("Results"),
+                 DTOutput("enzyme_activity_table"),
+                 br(),
+                 downloadButton("dl_enzyme_activity", "Export", class = "btn-success"),
+                 hr(),
+                 h4("Summary Statistics"),
+                 DTOutput("enzyme_activity_stats_table")
         ),
         
         # ===== TAB 3: PRODUCT CONCENTRATION =====
         tabPanel("3. Product Concentration",
-          h3("Product Concentration Analysis"),
-          p("Quantitative determination of product formation", style = "color: #16a085; font-weight: bold;"),
-          br(),
-          h4("Results"),
-          DTOutput("product_concentration_table"),
-          hr(),
-          h4("Summary"),
-          DTOutput("product_concentration_stats_table")
+                 h3("Product Concentration Analysis"),
+                 p("Quantitative determination of product formation", style = "color: #16a085; font-weight: bold;"),
+                 br(),
+                 h4("Results"),
+                 DTOutput("product_concentration_table"),
+                 hr(),
+                 h4("Summary"),
+                 DTOutput("product_concentration_stats_table")
         ),
         
         # ===== TAB 4: SPECIFIC ACTIVITY =====
         tabPanel("4. Specific Activity",
-          h3("Specific Activity - Normalized Enzyme Efficiency"),
-          p("Enzyme activity normalized to protein concentration", style = "color: #16a085; font-weight: bold;"),
-          
-          fluidRow(
-            column(6, 
-              h4("Protein Data"),
-              fileInput("protein_for_specific", "Upload protein_results.csv"),
-              p("From Protein Estimation", style = "color: #7f8c8d;")
-            ),
-            column(6,
-              h4("Enzyme Data"),
-              fileInput("enzyme_for_specific", "Upload enzyme_activity.csv"),
-              p("From Enzyme Activity", style = "color: #7f8c8d;")
-            )
-          ),
-          
-          br(),
-          actionButton("calc_specific", "Calculate Specific Activity", class = "btn-success btn-lg btn-block"),
-          hr(),
-          h4("Results"),
-          DTOutput("specific_activity_table"),
-          br(),
-          downloadButton("dl_specific_activity", "Export", class = "btn-success"),
-          hr(),
-          h4("Summary Statistics"),
-          DTOutput("specific_activity_stats_table")
+                 h3("Specific Activity - Normalized Enzyme Efficiency"),
+                 p("Enzyme activity normalized to protein concentration", style = "color: #16a085; font-weight: bold;"),
+                 
+                 fluidRow(
+                   column(6, 
+                          h4("Protein Data"),
+                          fileInput("protein_for_specific", "Upload protein_results.csv"),
+                          p("From Protein Estimation", style = "color: #7f8c8d;")
+                   ),
+                   column(6,
+                          h4("Enzyme Data"),
+                          fileInput("enzyme_for_specific", "Upload enzyme_activity.csv"),
+                          p("From Enzyme Activity", style = "color: #7f8c8d;")
+                   )
+                 ),
+                 
+                 br(),
+                 actionButton("calc_specific", "Calculate Specific Activity", class = "btn-success btn-lg btn-block"),
+                 hr(),
+                 h4("Results"),
+                 DTOutput("specific_activity_table"),
+                 br(),
+                 downloadButton("dl_specific_activity", "Export", class = "btn-success"),
+                 hr(),
+                 h4("Summary Statistics"),
+                 DTOutput("specific_activity_stats_table")
         ),
         
         # ===== TAB 5: REPLICATION ANALYSIS =====
         tabPanel("5. Replication Quality",
-          h3("Replication Assessment & Quality Control"),
-          p("Measurement precision and reproducibility evaluation", style = "color: #16a085; font-weight: bold;"),
-          br(),
-          h4("Protein - Replicates"),
-          DTOutput("protein_replication_table"),
-          hr(),
-          h4("Enzyme Activity - Replicates"),
-          DTOutput("enzyme_replication_table"),
-          hr(),
-          h4("Specific Activity - Summary"),
-          DTOutput("specific_replication_table"),
-          hr(),
-          h4("Quality Metrics (CV%)"),
-          verbatimTextOutput("replication_quality_metrics")
+                 h3("Replication Assessment & Quality Control"),
+                 p("Measurement precision and reproducibility evaluation", style = "color: #16a085; font-weight: bold;"),
+                 br(),
+                 h4("Protein - Replicates"),
+                 DTOutput("protein_replication_table"),
+                 hr(),
+                 h4("Enzyme Activity - Replicates"),
+                 DTOutput("enzyme_replication_table"),
+                 hr(),
+                 h4("Specific Activity - Summary"),
+                 DTOutput("specific_replication_table"),
+                 hr(),
+                 h4("Quality Metrics (CV%)"),
+                 verbatimTextOutput("replication_quality_metrics")
         ),
         
         # ===== TAB 6: STATISTICS & PLOTS =====
         tabPanel("6. Statistics & Plots",
-          h3("Statistical Analysis and Visualizations"),
-          br(),
-          h4("Mean Specific Activity with Error Bars"),
-          plotOutput("plot_specific_activity", height = "300px"),
-          hr(),
-          h4("Individual Replicate Values"),
-          plotOutput("plot_all_replicates", height = "300px"),
-          hr(),
-          h4("Distribution with Box Plot"),
-          plotOutput("plot_boxplot_activity", height = "300px"),
-          hr(),
-          h4("Mean with 95% Confidence Intervals"),
-          plotOutput("plot_barplot_activity", height = "300px"),
-          hr(),
-          h4("With Tukey HSD Statistical Grouping"),
-          p("Letters above bars: Same letter = not significantly different (p > 0.05), Different letters = significant difference (p < 0.05)", 
-            style = "color: #34495e; font-size: 12px;"),
-          plotOutput("plot_barplot_grouped", height = "300px"),
-          hr(),
-          h4("CV% Quality Assessment"),
-          plotOutput("plot_cv", height = "300px"),
-          hr(),
-          h3("Statistical Results", style = "color: #2980b9;"),
-          h4("Descriptive Statistics"),
-          verbatimTextOutput("quant_descriptive_stats"),
-          hr(),
-          h4("One-Way ANOVA"),
-          verbatimTextOutput("quant_anova_results"),
-          hr(),
-          h4("Tukey HSD Post-hoc Test"),
-          verbatimTextOutput("quant_posthoc_results")
+                 h3("Statistical Analysis and Visualizations"),
+                 br(),
+                 h4("Mean Specific Activity with Error Bars"),
+                 plotOutput("plot_specific_activity", height = "300px"),
+                 hr(),
+                 h4("Individual Replicate Values"),
+                 plotOutput("plot_all_replicates", height = "300px"),
+                 hr(),
+                 h4("Distribution with Box Plot"),
+                 plotOutput("plot_boxplot_activity", height = "300px"),
+                 hr(),
+                 h4("Mean with 95% Confidence Intervals"),
+                 plotOutput("plot_barplot_activity", height = "300px"),
+                 hr(),
+                 h4("With Tukey HSD Statistical Grouping"),
+                 p("Letters above bars: Same letter = not significantly different (p > 0.05), Different letters = significant difference (p < 0.05)", 
+                   style = "color: #34495e; font-size: 12px;"),
+                 plotOutput("plot_barplot_grouped", height = "300px"),
+                 hr(),
+                 h4("CV% Quality Assessment"),
+                 plotOutput("plot_cv", height = "300px"),
+                 hr(),
+                 h3("Statistical Results", style = "color: #2980b9;"),
+                 h4("Descriptive Statistics"),
+                 verbatimTextOutput("quant_descriptive_stats"),
+                 hr(),
+                 h4("One-Way ANOVA"),
+                 verbatimTextOutput("quant_anova_results"),
+                 hr(),
+                 h4("Tukey HSD Post-hoc Test"),
+                 verbatimTextOutput("quant_posthoc_results")
         ),
         
         # ===== TAB 7: QUALITATIVE ANALYSIS =====
         tabPanel("7. Qualitative Analysis",
-          h3("Zone Diameter Analysis"),
-          fileInput("qualitative_data_file", "Upload Zone Assay CSV"),
-          downloadButton("dl_qualitative_template", "Download Template", class = "btn-info"),
-          br(), hr(),
-          actionButton("calc_qualitative", "Calculate", class = "btn-success btn-block"),
-          hr(),
-          h4("Results"),
-          DTOutput("qualitative_results_table"),
-          hr(),
-          h4("Summary Statistics"),
-          DTOutput("qualitative_stats_table"),
-          hr(),
-          h4("Descriptive Statistics"),
-          verbatimTextOutput("qual_descriptive_stats"),
-          hr(),
-          h4("ANOVA Results"),
-          verbatimTextOutput("qual_anova_results"),
-          hr(),
-          h4("Post-hoc Comparison"),
-          verbatimTextOutput("qual_posthoc_results"),
-          br(),
-          h4("Distribution Plot"),
-          plotOutput("plot_qual_boxplot", height = "350px")
-        )
+                 h3("Zone Diameter Analysis"),
+                 fileInput("qualitative_data_file", "Upload Zone Assay CSV"),
+                 downloadButton("dl_qualitative_template", "Download Template", class = "btn-info"),
+                 br(), hr(),
+                 actionButton("calc_qualitative", "Calculate", class = "btn-success btn-block"),
+                 hr(),
+                 h4("Results"),
+                 DTOutput("qualitative_results_table"),
+                 hr(),
+                 h4("Summary Statistics"),
+                 DTOutput("qualitative_stats_table"),
+                 hr(),
+                 h4("Descriptive Statistics"),
+                 verbatimTextOutput("qual_descriptive_stats"),
+                 hr(),
+                 h4("ANOVA Results"),
+                 verbatimTextOutput("qual_anova_results"),
+                 hr(),
+                 h4("Post-hoc Comparison"),
+                 verbatimTextOutput("qual_posthoc_results"),
+                 br(),
+                 h4("Distribution Plot"),
+                 plotOutput("plot_qual_boxplot", height = "350px")
       )
     )
   )
 )
+)
 
-# ===== SERVER LOGIC =====
-
+# ===== SERVER =====
 server <- function(input, output, session) {
   
   output$enzyme_info_display1 <- renderText(paste("Enzyme Type:", input$enzyme_type_nav))
   output$enzyme_product_display <- renderText(paste("Product:", enzyme_config[[input$enzyme_type_nav]]$standard_product))
   output$enzyme_wavelength_display <- renderText(paste("Wavelength:", enzyme_config[[input$enzyme_type_nav]]$standard_wavelength))
-
+  
   protein_model <- reactiveVal(NULL)
   protein_results <- reactiveVal(NULL)
   enzyme_model <- reactiveVal(NULL)
@@ -470,9 +525,8 @@ server <- function(input, output, session) {
   product_concentration_results <- reactiveVal(NULL)
   specific_activity_results <- reactiveVal(NULL)
   qualitative_results <- reactiveVal(NULL)
-
-  # ===== PROTEIN MODULE =====
   
+  # ===== PASTE YOUR COMPLETE ORIGINAL SERVER CODE HERE =====
   output$dl_protein_standards_template <- downloadHandler(
     filename = "bradford_standards.csv",
     content = function(file) {
@@ -484,7 +538,7 @@ server <- function(input, output, session) {
       write.csv(df, file, row.names = FALSE)
     }
   )
-
+  
   output$dl_protein_samples_template <- downloadHandler(
     filename = "protein_samples.csv",
     content = function(file) {
@@ -497,7 +551,7 @@ server <- function(input, output, session) {
       write.csv(df, file, row.names = FALSE)
     }
   )
-
+  
   protein_standards <- reactive({
     req(input$protein_standards_file)
     read.csv(input$protein_standards_file$datapath, stringsAsFactors = FALSE)
@@ -569,7 +623,7 @@ server <- function(input, output, session) {
       write.csv(protein_results(), file, row.names = FALSE)
     }
   )
-
+  
   # ===== ENZYME MODULE =====
   
   output$dl_enzyme_template <- downloadHandler(
@@ -577,17 +631,17 @@ server <- function(input, output, session) {
     content = function(file) {
       if(input$enzyme_type_nav == "Lipase") {
         df <- data.frame(Concentration_µM = c(0, 0, 0, 10, 10, 10, 25, 25, 25, 50, 50, 50, 100, 100, 100),
-                        Replicate = c(1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3),
-                        Absorbance = c(0.049, 0.051, 0.050, 0.143, 0.147, 0.145, 0.283, 0.287, 0.285, 0.518, 0.522, 0.520, 0.948, 0.952, 0.950))
+                         Replicate = c(1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3),
+                         Absorbance = c(0.049, 0.051, 0.050, 0.143, 0.147, 0.145, 0.283, 0.287, 0.285, 0.518, 0.522, 0.520, 0.948, 0.952, 0.950))
       } else {
         df <- data.frame(Concentration_mg_mL = c(0, 0, 0, 0.5, 0.5, 0.5, 1.0, 1.0, 1.0, 2.0, 2.0, 2.0, 5.0, 5.0, 5.0),
-                        Replicate = c(1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3),
-                        Absorbance = c(0.049, 0.051, 0.050, 0.143, 0.147, 0.145, 0.238, 0.242, 0.240, 0.433, 0.437, 0.435, 0.918, 0.922, 0.920))
+                         Replicate = c(1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3),
+                         Absorbance = c(0.049, 0.051, 0.050, 0.143, 0.147, 0.145, 0.238, 0.242, 0.240, 0.433, 0.437, 0.435, 0.918, 0.922, 0.920))
       }
       write.csv(df, file, row.names = FALSE)
     }
   )
-
+  
   output$dl_enzyme_assay_template <- downloadHandler(
     filename = "enzyme_assay.csv",
     content = function(file) {
@@ -599,7 +653,7 @@ server <- function(input, output, session) {
       write.csv(df, file, row.names = FALSE)
     }
   )
-
+  
   enzyme_standards <- reactive({
     req(input$enzyme_standards_file)
     read.csv(input$enzyme_standards_file$datapath, stringsAsFactors = FALSE)
@@ -692,7 +746,7 @@ server <- function(input, output, session) {
       write.csv(enzyme_activity_results(), file, row.names = FALSE)
     }
   )
-
+  
   # ===== PRODUCT CONCENTRATION MODULE =====
   
   output$product_concentration_table <- renderDT({
@@ -711,7 +765,7 @@ server <- function(input, output, session) {
                 CV_Percent = (SD/Mean_Product_µmol)*100, .groups = "drop")
     datatable(stats) %>% formatRound(columns = 2:5, digits = 4)
   })
-
+  
   # ===== SPECIFIC ACTIVITY MODULE =====
   
   observeEvent(input$calc_specific, {
@@ -752,7 +806,7 @@ server <- function(input, output, session) {
       write.csv(specific_activity_results(), file, row.names = FALSE)
     }
   )
-
+  
   # ===== REPLICATION ANALYSIS MODULE =====
   
   output$protein_replication_table <- renderDT({
@@ -799,7 +853,7 @@ server <- function(input, output, session) {
       cat(sprintf("%-20s CV=%5.2f%%  %s\n", stats$Microorganism[i], cv, quality))
     }
   })
-
+  
   # ===== VISUALIZATION MODULE =====
   
   get_tukey_letters <- function(data) {
@@ -850,7 +904,7 @@ server <- function(input, output, session) {
   output$plot_all_replicates <- renderPlot({
     req(specific_activity_results())
     ggplot(specific_activity_results(), aes(x = Microorganism, y = Specific_Activity_U_mg, 
-                                             color = as.factor(Replicate))) +
+                                            color = as.factor(Replicate))) +
       geom_point(size = 4, alpha = 0.8, position = position_dodge(width = 0.3)) +
       theme_minimal(base_size = 13) +
       theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
@@ -861,7 +915,7 @@ server <- function(input, output, session) {
   output$plot_boxplot_activity <- renderPlot({
     req(specific_activity_results())
     ggplot(specific_activity_results(), aes(x = Microorganism, y = Specific_Activity_U_mg, 
-                                             fill = Microorganism)) +
+                                            fill = Microorganism)) +
       geom_boxplot(alpha = 0.7) +
       geom_jitter(width = 0.2, alpha = 0.5, size = 2) +
       theme_minimal(base_size = 13) +
@@ -935,7 +989,7 @@ server <- function(input, output, session) {
       labs(title = "CV% Quality", x = "Microorganism", y = "CV (%)") +
       scale_fill_brewer(palette = "Spectral")
   })
-
+  
   # ===== STATISTICS =====
   
   output$quant_descriptive_stats <- renderPrint({
@@ -969,7 +1023,7 @@ server <- function(input, output, session) {
     cat("TUKEY HSD TEST\n\n")
     print(TukeyHSD(model))
   })
-
+  
   # ===== QUALITATIVE MODULE =====
   
   output$dl_qualitative_template <- downloadHandler(
@@ -989,8 +1043,8 @@ server <- function(input, output, session) {
     qual_data <- read.csv(input$qualitative_data_file$datapath, stringsAsFactors = FALSE)
     qual_data$Enzymatic_Index <- qual_data$Zone_Diameter_mm / qual_data$Colony_Diameter_mm
     qual_data$Activity_Rating <- cut(qual_data$Enzymatic_Index, 
-                                      breaks = c(-Inf, 1, 2, 3, 5, Inf),
-                                      labels = c("None", "Weak", "Moderate", "Strong", "Very Strong"))
+                                     breaks = c(-Inf, 1, 2, 3, 5, Inf),
+                                     labels = c("None", "Weak", "Moderate", "Strong", "Very Strong"))
     qualitative_results(qual_data)
     showNotification("✓ Calculated!", type = "message", duration = 2)
   })
@@ -1045,7 +1099,7 @@ server <- function(input, output, session) {
   output$plot_qual_boxplot <- renderPlot({
     req(qualitative_results())
     ggplot(qualitative_results(), aes(x = Microorganism, y = Enzymatic_Index, 
-                                       fill = Microorganism)) +
+                                      fill = Microorganism)) +
       geom_boxplot(alpha = 0.7) +
       geom_jitter(width = 0.2, alpha = 0.5, size = 2) +
       theme_minimal(base_size = 13) +
