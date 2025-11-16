@@ -91,8 +91,8 @@ ui <- fluidPage(
     }
     
     .enzyme-header img {
-      height: 56px;
-      margin-right: 14px;
+      height: 156px;
+      margin-right: 0px;
       vertical-align: middle;
       max-width: 100%;
       width: auto;
@@ -184,7 +184,7 @@ ui <- fluidPage(
     )
   ),
   
-  # ===== REST OF APP - KEEP ORIGINAL CODE FROM HERE ONWARDS =====
+
   sidebarLayout(
     sidebarPanel(
       width = 3,
@@ -1112,4 +1112,5 @@ server <- function(input, output, session) {
 # ===== LAUNCH =====
 
 shinyApp(ui = ui, server = server)
+
 
