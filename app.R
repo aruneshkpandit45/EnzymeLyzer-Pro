@@ -98,7 +98,7 @@ ui <- fluidPage(
       width: auto;
     }
     
-       .reaction-volume-box {
+    .reaction-volume-box {
       background-color: #fff9e6;
       border: 2px solid #f39c12;
       border-radius: 8px;
@@ -123,7 +123,7 @@ ui <- fluidPage(
       background-color: #2980b9;
       color: white;
     }
-
+    
     .enzyme-title {
       display: flex;
       flex-direction: column;
@@ -396,158 +396,158 @@ ui <- fluidPage(
                           downloadButton("dl_enzyme_assay_template", "Download Template", class = "btn-info"),
                           br(), br(),
                           div(class = "reaction-volume-box",
-                              h5("⚙️ Reaction Parameters"),
-                              numericInput("reaction_volume_user", "Reaction Volume (mL)", value = 1.0, min = 0, step = 0.1),
+                              h5("Reaction Parameters"),
+                              numericInput("reaction_volume_user", "Reaction Volume (mL)", value = 1.0, min = 0, step = 1),
                               numericInput("reaction_time_user", "Reaction Time (min)", value = 30, min = 1)
                           ),
                           actionButton("show_protocol", "📖 View Protocol", class = "protocol-btn"),
                           br(),
                           actionButton("calc_enzyme", "Calculate", class = "btn-success btn-block")
+                   )
+                 ),
+                 
+                 hr(),
+                 h4("Results"),
+                 DTOutput("enzyme_activity_table"),
+                 br(),
+                 downloadButton("dl_enzyme_activity", "Export", class = "btn-success"),
+                 hr(),
+                 h4("Summary Statistics"),
+                 DTOutput("enzyme_activity_stats_table")
+        ),
+        
+        # ===== TAB 3: PRODUCT CONCENTRATION =====
+        tabPanel("3. Product Concentration",
+                 h3("Product Concentration Analysis"),
+                 p("Quantitative determination of product formation", style = "color: #16a085; font-weight: bold;"),
+                 br(),
+                 h4("Results"),
+                 DTOutput("product_concentration_table"),
+                 hr(),
+                 h4("Summary"),
+                 DTOutput("product_concentration_stats_table")
+        ),
+        
+        # ===== TAB 4: SPECIFIC ACTIVITY =====
+        tabPanel("4. Specific Activity",
+                 h3("Specific Activity - Normalized Enzyme Efficiency"),
+                 p("Enzyme activity normalized to protein concentration", style = "color: #16a085; font-weight: bold;"),
+                 
+                 fluidRow(
+                   column(6, 
+                          h4("Protein Data"),
+                          fileInput("protein_for_specific", "Upload protein_results.csv"),
+                          p("From Protein Estimation", style = "color: #7f8c8d;")
                    ),
-                   
-                   hr(),
-                   h4("Results"),
-                   DTOutput("enzyme_activity_table"),
-                   br(),
-                   downloadButton("dl_enzyme_activity", "Export", class = "btn-success"),
-                   hr(),
-                   h4("Summary Statistics"),
-                   DTOutput("enzyme_activity_stats_table")
+                   column(6,
+                          h4("Enzyme Data"),
+                          fileInput("enzyme_for_specific", "Upload enzyme_activity.csv"),
+                          p("From Enzyme Activity", style = "color: #7f8c8d;")
+                   )
                  ),
                  
-                 # ===== TAB 3: PRODUCT CONCENTRATION =====
-                 tabPanel("3. Product Concentration",
-                          h3("Product Concentration Analysis"),
-                          p("Quantitative determination of product formation", style = "color: #16a085; font-weight: bold;"),
-                          br(),
-                          h4("Results"),
-                          DTOutput("product_concentration_table"),
-                          hr(),
-                          h4("Summary"),
-                          DTOutput("product_concentration_stats_table")
-                 ),
-                 
-                 # ===== TAB 4: SPECIFIC ACTIVITY =====
-                 tabPanel("4. Specific Activity",
-                          h3("Specific Activity - Normalized Enzyme Efficiency"),
-                          p("Enzyme activity normalized to protein concentration", style = "color: #16a085; font-weight: bold;"),
-                          
-                          fluidRow(
-                            column(6, 
-                                   h4("Protein Data"),
-                                   fileInput("protein_for_specific", "Upload protein_results.csv"),
-                                   p("From Protein Estimation", style = "color: #7f8c8d;")
-                            ),
-                            column(6,
-                                   h4("Enzyme Data"),
-                                   fileInput("enzyme_for_specific", "Upload enzyme_activity.csv"),
-                                   p("From Enzyme Activity", style = "color: #7f8c8d;")
-                            )
-                          ),
-                          
-                          br(),
-                          actionButton("calc_specific", "Calculate Specific Activity", class = "btn-success btn-lg btn-block"),
-                          hr(),
-                          h4("Results"),
-                          DTOutput("specific_activity_table"),
-                          br(),
-                          downloadButton("dl_specific_activity", "Export", class = "btn-success"),
-                          hr(),
-                          h4("Summary Statistics"),
-                          DTOutput("specific_activity_stats_table")
-                 ),
-                 
-                 # ===== TAB 5: REPLICATION ANALYSIS =====
-                 tabPanel("5. Replication Quality",
-                          h3("Replication Assessment & Quality Control"),
-                          p("Measurement precision and reproducibility evaluation", style = "color: #16a085; font-weight: bold;"),
-                          br(),
-                          h4("Protein - Replicates"),
-                          DTOutput("protein_replication_table"),
-                          hr(),
-                          h4("Enzyme Activity - Replicates"),
-                          DTOutput("enzyme_replication_table"),
-                          hr(),
-                          h4("Specific Activity - Summary"),
-                          DTOutput("specific_replication_table"),
-                          hr(),
-                          h4("Quality Metrics (CV%)"),
-                          verbatimTextOutput("replication_quality_metrics")
-                 ),
-                 
-                 # ===== TAB 6: STATISTICS & PLOTS =====
-                 tabPanel("6. Statistics & Plots",
-                          h3("Statistical Analysis and Visualizations"),
-                          br(),
-                          h4("Mean Specific Activity with Error Bars"),
-                          plotOutput("plot_specific_activity", height = "300px"),
-                          hr(),
-                          h4("Individual Replicate Values"),
-                          plotOutput("plot_all_replicates", height = "300px"),
-                          hr(),
-                          h4("Distribution with Box Plot"),
-                          plotOutput("plot_boxplot_activity", height = "300px"),
-                          hr(),
-                          h4("Mean with 95% Confidence Intervals"),
-                          plotOutput("plot_barplot_activity", height = "300px"),
-                          hr(),
-                          h4("With Tukey HSD Statistical Grouping"),
-                          p("Letters above bars: Same letter = not significantly different (p > 0.05), Different letters = significant difference (p < 0.05)", 
-                            style = "color: #34495e; font-size: 12px;"),
-                          plotOutput("plot_barplot_grouped", height = "300px"),
-                          hr(),
-                          h4("CV% Quality Assessment"),
-                          plotOutput("plot_cv", height = "300px"),
-                          hr(),
-                          h3("Statistical Results", style = "color: #2980b9;"),
-                          h4("Descriptive Statistics"),
-                          verbatimTextOutput("quant_descriptive_stats"),
-                          hr(),
-                          h4("One-Way ANOVA"),
-                          verbatimTextOutput("quant_anova_results"),
-                          hr(),
-                          h4("Tukey HSD Post-hoc Test"),
-                          verbatimTextOutput("quant_posthoc_results")
-                 ),
-                 
-                 # ===== TAB 7: QUALITATIVE ANALYSIS =====
-                 tabPanel("7. Qualitative Analysis",
-                          h3("Zone Diameter Analysis"),
-                          fileInput("qualitative_data_file", "Upload Zone Assay CSV"),
-                          downloadButton("dl_qualitative_template", "Download Template", class = "btn-info"),
-                          br(), hr(),
-                          actionButton("calc_qualitative", "Calculate", class = "btn-success btn-block"),
-                          hr(),
-                          h4("Results"),
-                          DTOutput("qualitative_results_table"),
-                          hr(),
-                          h4("Summary Statistics"),
-                          DTOutput("qualitative_stats_table"),
-                          hr(),
-                          h4("Descriptive Statistics"),
-                          verbatimTextOutput("qual_descriptive_stats"),
-                          hr(),
-                          h4("ANOVA Results"),
-                          verbatimTextOutput("qual_anova_results"),
-                          hr(),
-                          h4("Post-hoc Comparison"),
-                          verbatimTextOutput("qual_posthoc_results"),
-                          br(),
-                          h4("Distribution Plot"),
-                          plotOutput("plot_qual_boxplot", height = "350px")
-                 )
+                 br(),
+                 actionButton("calc_specific", "Calculate Specific Activity", class = "btn-success btn-lg btn-block"),
+                 hr(),
+                 h4("Results"),
+                 DTOutput("specific_activity_table"),
+                 br(),
+                 downloadButton("dl_specific_activity", "Export", class = "btn-success"),
+                 hr(),
+                 h4("Summary Statistics"),
+                 DTOutput("specific_activity_stats_table")
+        ),
+        
+        # ===== TAB 5: REPLICATION ANALYSIS =====
+        tabPanel("5. Replication Quality",
+                 h3("Replication Assessment & Quality Control"),
+                 p("Measurement precision and reproducibility evaluation", style = "color: #16a085; font-weight: bold;"),
+                 br(),
+                 h4("Protein - Replicates"),
+                 DTOutput("protein_replication_table"),
+                 hr(),
+                 h4("Enzyme Activity - Replicates"),
+                 DTOutput("enzyme_replication_table"),
+                 hr(),
+                 h4("Specific Activity - Summary"),
+                 DTOutput("specific_replication_table"),
+                 hr(),
+                 h4("Quality Metrics (CV%)"),
+                 verbatimTextOutput("replication_quality_metrics")
+        ),
+        
+        # ===== TAB 6: STATISTICS & PLOTS =====
+        tabPanel("6. Statistics & Plots",
+                 h3("Statistical Analysis and Visualizations"),
+                 br(),
+                 h4("Mean Specific Activity with Error Bars"),
+                 plotOutput("plot_specific_activity", height = "300px"),
+                 hr(),
+                 h4("Individual Replicate Values"),
+                 plotOutput("plot_all_replicates", height = "300px"),
+                 hr(),
+                 h4("Distribution with Box Plot"),
+                 plotOutput("plot_boxplot_activity", height = "300px"),
+                 hr(),
+                 h4("Mean with 95% Confidence Intervals"),
+                 plotOutput("plot_barplot_activity", height = "300px"),
+                 hr(),
+                 h4("With Tukey HSD Statistical Grouping"),
+                 p("Letters above bars: Same letter = not significantly different (p > 0.05), Different letters = significant difference (p < 0.05)", 
+                   style = "color: #34495e; font-size: 12px;"),
+                 plotOutput("plot_barplot_grouped", height = "300px"),
+                 hr(),
+                 h4("CV% Quality Assessment"),
+                 plotOutput("plot_cv", height = "300px"),
+                 hr(),
+                 h3("Statistical Results", style = "color: #2980b9;"),
+                 h4("Descriptive Statistics"),
+                 verbatimTextOutput("quant_descriptive_stats"),
+                 hr(),
+                 h4("One-Way ANOVA"),
+                 verbatimTextOutput("quant_anova_results"),
+                 hr(),
+                 h4("Tukey HSD Post-hoc Test"),
+                 verbatimTextOutput("quant_posthoc_results")
+        ),
+        
+        # ===== TAB 7: QUALITATIVE ANALYSIS =====
+        tabPanel("7. Qualitative Analysis",
+                 h3("Zone Diameter Analysis"),
+                 fileInput("qualitative_data_file", "Upload Zone Assay CSV"),
+                 downloadButton("dl_qualitative_template", "Download Template", class = "btn-info"),
+                 br(), hr(),
+                 actionButton("calc_qualitative", "Calculate", class = "btn-success btn-block"),
+                 hr(),
+                 h4("Results"),
+                 DTOutput("qualitative_results_table"),
+                 hr(),
+                 h4("Summary Statistics"),
+                 DTOutput("qualitative_stats_table"),
+                 hr(),
+                 h4("Descriptive Statistics"),
+                 verbatimTextOutput("qual_descriptive_stats"),
+                 hr(),
+                 h4("ANOVA Results"),
+                 verbatimTextOutput("qual_anova_results"),
+                 hr(),
+                 h4("Post-hoc Comparison"),
+                 verbatimTextOutput("qual_posthoc_results"),
+                 br(),
+                 h4("Distribution Plot"),
+                 plotOutput("plot_qual_boxplot", height = "350px")
         )
       )
     )
   )
 )
+
 # ===== SERVER =====
 server <- function(input, output, session) {
   
   output$enzyme_info_display1 <- renderText(paste("Enzyme Type:", input$enzyme_type_nav))
   output$enzyme_product_display <- renderText(paste("Product:", enzyme_config[[input$enzyme_type_nav]]$standard_product))
   output$enzyme_wavelength_display <- renderText(paste("Wavelength:", enzyme_config[[input$enzyme_type_nav]]$standard_wavelength))
-  
   observeEvent(input$show_protocol, {
     showModal(modalDialog(
       title = paste(input$enzyme_type_nav, "- Protocol & Reaction Parameters"),
@@ -558,7 +558,7 @@ server <- function(input, output, session) {
         "<p><strong>Product:</strong> ", enzyme_config[[input$enzyme_type_nav]]$standard_product, "</p>",
         "<p><strong>Wavelength:</strong> ", enzyme_config[[input$enzyme_type_nav]]$standard_wavelength, "</p>",
         "<hr>",
-        "<h4>⚙️ Current Reaction Parameters:</h4>",
+        "<h4>Current Reaction Parameters:</h4>",
         "<p><strong>Reaction Volume:</strong> ", input$reaction_volume_user, " mL</p>",
         "<p><strong>Reaction Time:</strong> ", input$reaction_time_user, " minutes</p>",
         "<hr>",
@@ -573,8 +573,6 @@ server <- function(input, output, session) {
       footer = modalButton("Close")
     ))
   })
-  
-  
   protein_model <- reactiveVal(NULL)
   protein_results <- reactiveVal(NULL)
   enzyme_model <- reactiveVal(NULL)
@@ -764,410 +762,409 @@ server <- function(input, output, session) {
     enzyme_conf <- enzyme_config[[input$enzyme_type_nav]]
     
     enzyme_data$Corrected_Absorbance <- enzyme_data$Absorbance - enzyme_data$Blank_Absorbance
-    enzyme_data$Product_Conc <- (enzyme_data$Corrected_Absorbance - coef_val) / coef_val
+    enzyme_data$Product_Conc <- (enzyme_data$Corrected_Absorbance - coef_val[1]) / coef_val[2]
     
-    if(std_colnames == "Concentration_µg_mL") {
-      enzyme_data$Product_mol <- enzyme_data$Product_Conc * 1000 / enzyme_conf$molar_mass
+    if(std_colnames[1] == "Concentration_mg_mL") {
+      enzyme_data$Product_µmol <- enzyme_data$Product_Conc * 1000 / enzyme_conf$molar_mass
     } else {
-      enzyme_data$Product_mol <- enzyme_data$Product_Conc
+      enzyme_data$Product_µmol <- enzyme_data$Product_Conc
     }
     
-    
-    enzyme_data$Enzyme_Activity_U_mL <- (enzyme_data$Product_mol / input$reaction_time_user) / input$reaction_volume_user
+    enzyme_data$Enzyme_Activity_U_mL <- enzyme_data$Product_µmol / input$reaction_time_user / input$reaction_volume_user
     
     
     enzyme_activity_results(enzyme_data)
     product_concentration_results(enzyme_data)
     showNotification(paste("✓ Enzyme activity calculated! (Volume:", input$reaction_volume_user, "mL, Time:", input$reaction_time_user, "min)"), type = "message", duration = 3)
-    
-    
-    output$enzyme_activity_table <- renderDT({
+  })
+  
+  output$enzyme_activity_table <- renderDT({
+    req(enzyme_activity_results())
+    display_cols <- c("Sample_ID", "Microorganism", "Replicate", "Absorbance", "Blank_Absorbance", "Corrected_Absorbance", "Product_µmol", "Enzyme_Activity_U_mL")
+    datatable(enzyme_activity_results()[, display_cols], options = list(pageLength = 20, scrollX = TRUE)) %>%
+      formatRound(columns = which(sapply(enzyme_activity_results()[, display_cols], is.numeric)), digits = 4)
+  })
+  
+  output$enzyme_activity_stats_table <- renderDT({
+    req(enzyme_activity_results())
+    stats <- enzyme_activity_results() %>%
+      group_by(Microorganism) %>%
+      summarise(N = n(), Mean = mean(Enzyme_Activity_U_mL, na.rm = TRUE), 
+                SD = sd(Enzyme_Activity_U_mL, na.rm = TRUE), SE = SD/sqrt(N), 
+                CV_Percent = (SD/Mean)*100, .groups = "drop")
+    datatable(stats) %>% formatRound(columns = 2:5, digits = 4)
+  })
+  
+  output$dl_enzyme_activity <- downloadHandler(
+    filename = function() paste0("enzyme_", input$enzyme_type_nav, "_", Sys.Date(), ".csv"),
+    content = function(file) {
       req(enzyme_activity_results())
-      display_cols <- c("Sample_ID", "Microorganism", "Replicate", "Absorbance", "Blank_Absorbance", "Corrected_Absorbance", "Product_µmol", "Enzyme_Activity_U_mL")
-      datatable(enzyme_activity_results()[, display_cols], options = list(pageLength = 20, scrollX = TRUE)) %>%
-        formatRound(columns = which(sapply(enzyme_activity_results()[, display_cols], is.numeric)), digits = 4)
-    })
+      write.csv(enzyme_activity_results(), file, row.names = FALSE)
+    }
+  )
+  
+  # ===== PRODUCT CONCENTRATION MODULE =====
+  
+  output$product_concentration_table <- renderDT({
+    req(product_concentration_results())
+    display_cols <- c("Sample_ID", "Microorganism", "Replicate", "Product_Conc", "Product_µmol")
+    datatable(product_concentration_results()[, display_cols], options = list(pageLength = 20, scrollX = TRUE)) %>%
+      formatRound(columns = which(sapply(product_concentration_results()[, display_cols], is.numeric)), digits = 4)
+  })
+  
+  output$product_concentration_stats_table <- renderDT({
+    req(product_concentration_results())
+    stats <- product_concentration_results() %>%
+      group_by(Microorganism) %>%
+      summarise(N = n(), Mean_Product_µmol = mean(Product_µmol, na.rm = TRUE), 
+                SD = sd(Product_µmol, na.rm = TRUE), SE = SD/sqrt(N), 
+                CV_Percent = (SD/Mean_Product_µmol)*100, .groups = "drop")
+    datatable(stats) %>% formatRound(columns = 2:5, digits = 4)
+  })
+  
+  # ===== SPECIFIC ACTIVITY MODULE =====
+  
+  observeEvent(input$calc_specific, {
+    req(input$protein_for_specific, input$enzyme_for_specific)
+    protein_data <- read.csv(input$protein_for_specific$datapath, stringsAsFactors = FALSE)
+    enzyme_data <- read.csv(input$enzyme_for_specific$datapath, stringsAsFactors = FALSE)
     
-    output$enzyme_activity_stats_table <- renderDT({
-      req(enzyme_activity_results())
-      stats <- enzyme_activity_results() %>%
-        group_by(Microorganism) %>%
-        summarise(N = n(), Mean = mean(Enzyme_Activity_U_mL, na.rm = TRUE), 
-                  SD = sd(Enzyme_Activity_U_mL, na.rm = TRUE), SE = SD/sqrt(N), 
-                  CV_Percent = (SD/Mean)*100, .groups = "drop")
-      datatable(stats) %>% formatRound(columns = 2:5, digits = 4)
-    })
+    merged <- merge(enzyme_data, protein_data[, c("Sample_ID", "Replicate", "Protein_mg_mL")],
+                    by = c("Sample_ID", "Replicate"), all.x = TRUE)
     
-    output$dl_enzyme_activity <- downloadHandler(
-      filename = function() paste0("enzyme_", input$enzyme_type_nav, "_", Sys.Date(), ".csv"),
-      content = function(file) {
-        req(enzyme_activity_results())
-        write.csv(enzyme_activity_results(), file, row.names = FALSE)
-      }
-    )
+    merged$Specific_Activity_U_mg <- merged$Enzyme_Activity_U_mL / merged$Protein_mg_mL
     
-    # ===== PRODUCT CONCENTRATION MODULE =====
-    
-    output$product_concentration_table <- renderDT({
-      req(product_concentration_results())
-      display_cols <- c("Sample_ID", "Microorganism", "Replicate", "Product_Conc", "Product_µmol")
-      datatable(product_concentration_results()[, display_cols], options = list(pageLength = 20, scrollX = TRUE)) %>%
-        formatRound(columns = which(sapply(product_concentration_results()[, display_cols], is.numeric)), digits = 4)
-    })
-    
-    output$product_concentration_stats_table <- renderDT({
-      req(product_concentration_results())
-      stats <- product_concentration_results() %>%
-        group_by(Microorganism) %>%
-        summarise(N = n(), Mean_Product_µmol = mean(Product_µmol, na.rm = TRUE), 
-                  SD = sd(Product_µmol, na.rm = TRUE), SE = SD/sqrt(N), 
-                  CV_Percent = (SD/Mean_Product_µmol)*100, .groups = "drop")
-      datatable(stats) %>% formatRound(columns = 2:5, digits = 4)
-    })
-    
-    # ===== SPECIFIC ACTIVITY MODULE =====
-    
-    observeEvent(input$calc_specific, {
-      req(input$protein_for_specific, input$enzyme_for_specific)
-      protein_data <- read.csv(input$protein_for_specific$datapath, stringsAsFactors = FALSE)
-      enzyme_data <- read.csv(input$enzyme_for_specific$datapath, stringsAsFactors = FALSE)
-      
-      merged <- merge(enzyme_data, protein_data[, c("Sample_ID", "Replicate", "Protein_mg_mL")],
-                      by = c("Sample_ID", "Replicate"), all.x = TRUE)
-      
-      merged$Specific_Activity_U_mg <- merged$Enzyme_Activity_U_mL / merged$Protein_mg_mL
-      
-      specific_activity_results(merged)
-      showNotification("✓ Specific activity calculated!", type = "message", duration = 3)
-    })
-    
-    output$specific_activity_table <- renderDT({
+    specific_activity_results(merged)
+    showNotification("✓ Specific activity calculated!", type = "message", duration = 3)
+  })
+  
+  output$specific_activity_table <- renderDT({
+    req(specific_activity_results())
+    display_cols <- c("Sample_ID", "Microorganism", "Replicate", "Protein_mg_mL", "Enzyme_Activity_U_mL", "Specific_Activity_U_mg")
+    datatable(specific_activity_results()[, display_cols], options = list(pageLength = 20, scrollX = TRUE)) %>%
+      formatRound(columns = which(sapply(specific_activity_results()[, display_cols], is.numeric)), digits = 4)
+  })
+  
+  output$specific_activity_stats_table <- renderDT({
+    req(specific_activity_results())
+    stats <- specific_activity_results() %>%
+      group_by(Microorganism) %>%
+      summarise(N = n(), Mean = mean(Specific_Activity_U_mg, na.rm = TRUE), 
+                SD = sd(Specific_Activity_U_mg, na.rm = TRUE), SE = SD/sqrt(N), 
+                CV_Percent = (SD/Mean)*100, .groups = "drop")
+    datatable(stats) %>% formatRound(columns = 2:5, digits = 4)
+  })
+  
+  output$dl_specific_activity <- downloadHandler(
+    filename = function() paste0("specific_activity_", Sys.Date(), ".csv"),
+    content = function(file) {
       req(specific_activity_results())
-      display_cols <- c("Sample_ID", "Microorganism", "Replicate", "Protein_mg_mL", "Enzyme_Activity_U_mL", "Specific_Activity_U_mg")
-      datatable(specific_activity_results()[, display_cols], options = list(pageLength = 20, scrollX = TRUE)) %>%
-        formatRound(columns = which(sapply(specific_activity_results()[, display_cols], is.numeric)), digits = 4)
-    })
+      write.csv(specific_activity_results(), file, row.names = FALSE)
+    }
+  )
+  
+  # ===== REPLICATION ANALYSIS MODULE =====
+  
+  output$protein_replication_table <- renderDT({
+    req(protein_results())
+    datatable(protein_results(), options = list(pageLength = 20, scrollX = TRUE)) %>%
+      formatRound(columns = which(sapply(protein_results(), is.numeric)), digits = 4)
+  })
+  
+  output$enzyme_replication_table <- renderDT({
+    req(enzyme_activity_results())
+    display_cols <- c("Sample_ID", "Microorganism", "Replicate", "Corrected_Absorbance", "Product_µmol", "Enzyme_Activity_U_mL")
+    datatable(enzyme_activity_results()[, display_cols], options = list(pageLength = 20, scrollX = TRUE)) %>%
+      formatRound(columns = which(sapply(enzyme_activity_results()[, display_cols], is.numeric)), digits = 4)
+  })
+  
+  output$specific_replication_table <- renderDT({
+    req(specific_activity_results())
+    summary_rep <- specific_activity_results() %>%
+      group_by(Microorganism, Replicate) %>%
+      summarise(Mean = mean(Specific_Activity_U_mg, na.rm = TRUE), .groups = "drop") %>%
+      pivot_wider(names_from = Replicate, values_from = Mean, names_prefix = "Rep_")
     
-    output$specific_activity_stats_table <- renderDT({
-      req(specific_activity_results())
-      stats <- specific_activity_results() %>%
-        group_by(Microorganism) %>%
-        summarise(N = n(), Mean = mean(Specific_Activity_U_mg, na.rm = TRUE), 
-                  SD = sd(Specific_Activity_U_mg, na.rm = TRUE), SE = SD/sqrt(N), 
-                  CV_Percent = (SD/Mean)*100, .groups = "drop")
-      datatable(stats) %>% formatRound(columns = 2:5, digits = 4)
-    })
+    summary_rep$Mean_All <- rowMeans(summary_rep[, -1], na.rm = TRUE)
+    summary_rep$SD <- apply(summary_rep[, -1], 1, sd, na.rm = TRUE)
+    summary_rep$CV_Percent <- (summary_rep$SD / summary_rep$Mean_All) * 100
     
-    output$dl_specific_activity <- downloadHandler(
-      filename = function() paste0("specific_activity_", Sys.Date(), ".csv"),
-      content = function(file) {
-        req(specific_activity_results())
-        write.csv(specific_activity_results(), file, row.names = FALSE)
-      }
-    )
+    datatable(summary_rep) %>% formatRound(columns = which(sapply(summary_rep, is.numeric)), digits = 4)
+  })
+  
+  output$replication_quality_metrics <- renderPrint({
+    req(specific_activity_results())
+    stats <- specific_activity_results() %>%
+      group_by(Microorganism) %>%
+      summarise(N = n(), Mean = mean(Specific_Activity_U_mg, na.rm = TRUE), 
+                SD = sd(Specific_Activity_U_mg, na.rm = TRUE), 
+                CV_Percent = (SD/Mean)*100, .groups = "drop")
     
-    # ===== REPLICATION ANALYSIS MODULE =====
-    
-    output$protein_replication_table <- renderDT({
-      req(protein_results())
-      datatable(protein_results(), options = list(pageLength = 20, scrollX = TRUE)) %>%
-        formatRound(columns = which(sapply(protein_results(), is.numeric)), digits = 4)
-    })
-    
-    output$enzyme_replication_table <- renderDT({
-      req(enzyme_activity_results())
-      display_cols <- c("Sample_ID", "Microorganism", "Replicate", "Corrected_Absorbance", "Product_µmol", "Enzyme_Activity_U_mL")
-      datatable(enzyme_activity_results()[, display_cols], options = list(pageLength = 20, scrollX = TRUE)) %>%
-        formatRound(columns = which(sapply(enzyme_activity_results()[, display_cols], is.numeric)), digits = 4)
-    })
-    
-    output$specific_replication_table <- renderDT({
-      req(specific_activity_results())
-      summary_rep <- specific_activity_results() %>%
-        group_by(Microorganism, Replicate) %>%
-        summarise(Mean = mean(Specific_Activity_U_mg, na.rm = TRUE), .groups = "drop") %>%
-        pivot_wider(names_from = Replicate, values_from = Mean, names_prefix = "Rep_")
+    cat("QUALITY CONTROL METRICS\n")
+    cat("="*50, "\n\n")
+    cat("Standards: <5% EXCELLENT, 5-10% GOOD, 10-20% ACCEPTABLE, >20% POOR\n\n")
+    for(i in 1:nrow(stats)) {
+      cv <- stats$CV_Percent[i]
+      quality <- if(cv < 5) "EXCELLENT" else if(cv < 10) "GOOD" else if(cv < 20) "ACCEPTABLE" else "POOR"
+      cat(sprintf("%-20s CV=%5.2f%%  %s\n", stats$Microorganism[i], cv, quality))
+    }
+  })
+  
+  # ===== VISUALIZATION MODULE =====
+  
+  get_tukey_letters <- function(data) {
+    if(n_distinct(data$Microorganism) < 2) return(NULL)
+    tryCatch({
+      model <- aov(Specific_Activity_U_mg ~ Microorganism, data = data)
+      tukey_result <- TukeyHSD(model)
+      orgs <- unique(data$Microorganism)
+      n_orgs <- length(orgs)
+      letters <- rep("a", n_orgs)
+      names(letters) <- orgs
       
-      summary_rep$Mean_All <- rowMeans(summary_rep[, -1], na.rm = TRUE)
-      summary_rep$SD <- apply(summary_rep[, -1], 1, sd, na.rm = TRUE)
-      summary_rep$CV_Percent <- (summary_rep$SD / summary_rep$Mean_All) * 100
-      
-      datatable(summary_rep) %>% formatRound(columns = which(sapply(summary_rep, is.numeric)), digits = 4)
-    })
-    
-    output$replication_quality_metrics <- renderPrint({
-      req(specific_activity_results())
-      stats <- specific_activity_results() %>%
-        group_by(Microorganism) %>%
-        summarise(N = n(), Mean = mean(Specific_Activity_U_mg, na.rm = TRUE), 
-                  SD = sd(Specific_Activity_U_mg, na.rm = TRUE), 
-                  CV_Percent = (SD/Mean)*100, .groups = "drop")
-      
-      cat("QUALITY CONTROL METRICS\n")
-      cat("="*50, "\n\n")
-      cat("Standards: <5% EXCELLENT, 5-10% GOOD, 10-20% ACCEPTABLE, >20% POOR\n\n")
-      for(i in 1:nrow(stats)) {
-        cv <- stats$CV_Percent[i]
-        quality <- if(cv < 5) "EXCELLENT" else if(cv < 10) "GOOD" else if(cv < 20) "ACCEPTABLE" else "POOR"
-        cat(sprintf("%-20s CV=%5.2f%%  %s\n", stats$Microorganism[i], cv, quality))
-      }
-    })
-    
-    # ===== VISUALIZATION MODULE =====
-    
-    get_tukey_letters <- function(data) {
-      if(n_distinct(data$Microorganism) < 2) return(NULL)
-      tryCatch({
-        model <- aov(Specific_Activity_U_mg ~ Microorganism, data = data)
-        tukey_result <- TukeyHSD(model)
-        orgs <- unique(data$Microorganism)
-        n_orgs <- length(orgs)
-        letters <- rep("a", n_orgs)
-        names(letters) <- orgs
-        
-        for(i in 1:n_orgs) {
-          for(j in (i+1):n_orgs) {
-            comp_idx <- paste0(orgs[j], "-", orgs[i])
-            if(comp_idx %in% rownames(tukey_result$Microorganism)) {
-              p_val <- tukey_result$Microorganism[comp_idx, "p adj"]
-              if(p_val < 0.05) {
-                if(letters[i] == letters[j]) {
-                  letters[j] <- intToUtf8(utf8ToInt(letters[j]) + 1)
-                }
+      for(i in 1:n_orgs) {
+        for(j in (i+1):n_orgs) {
+          comp_idx <- paste0(orgs[j], "-", orgs[i])
+          if(comp_idx %in% rownames(tukey_result$Microorganism)) {
+            p_val <- tukey_result$Microorganism[comp_idx, "p adj"]
+            if(p_val < 0.05) {
+              if(letters[i] == letters[j]) {
+                letters[j] <- intToUtf8(utf8ToInt(letters[j]) + 1)
               }
             }
           }
         }
-        return(data.frame(Microorganism = names(letters), letter = letters, stringsAsFactors = FALSE))
-      }, error = function(e) {
-        return(NULL)
-      })
-    }
-    
-    output$plot_specific_activity <- renderPlot({
-      req(specific_activity_results())
-      summary_data <- specific_activity_results() %>%
-        group_by(Microorganism) %>%
-        summarise(Mean = mean(Specific_Activity_U_mg, na.rm = TRUE), 
-                  SE = sd(Specific_Activity_U_mg, na.rm = TRUE) / sqrt(n()), .groups = "drop")
-      
-      ggplot(summary_data, aes(x = Microorganism, y = Mean, fill = Microorganism)) +
-        geom_bar(stat = "identity", color = "black", alpha = 0.8, width = 0.7) +
-        geom_errorbar(aes(ymin = Mean - SE, ymax = Mean + SE), width = 0.25, size = 1) +
-        theme_minimal(base_size = 13) +
-        theme(legend.position = "none", axis.text.x = element_text(angle = 45, hjust = 1)) +
-        labs(title = "Mean Specific Activity ± SE", x = "Microorganism", y = "U/mg") +
-        scale_fill_brewer(palette = "Set2")
-    })
-    
-    output$plot_all_replicates <- renderPlot({
-      req(specific_activity_results())
-      ggplot(specific_activity_results(), aes(x = Microorganism, y = Specific_Activity_U_mg, 
-                                              color = as.factor(Replicate))) +
-        geom_point(size = 4, alpha = 0.8, position = position_dodge(width = 0.3)) +
-        theme_minimal(base_size = 13) +
-        theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-        labs(title = "All Replicate Values", x = "Microorganism", y = "U/mg", color = "Replicate") +
-        scale_color_manual(values = c("1" = "#FF6B6B", "2" = "#4ECDC4", "3" = "#45B7D1"))
-    })
-    
-    output$plot_boxplot_activity <- renderPlot({
-      req(specific_activity_results())
-      ggplot(specific_activity_results(), aes(x = Microorganism, y = Specific_Activity_U_mg, 
-                                              fill = Microorganism)) +
-        geom_boxplot(alpha = 0.7) +
-        geom_jitter(width = 0.2, alpha = 0.5, size = 2) +
-        theme_minimal(base_size = 13) +
-        theme(legend.position = "none", axis.text.x = element_text(angle = 45, hjust = 1)) +
-        labs(title = "Distribution with Replicates", x = "Microorganism", y = "U/mg") +
-        scale_fill_brewer(palette = "Set1")
-    })
-    
-    output$plot_barplot_activity <- renderPlot({
-      req(specific_activity_results())
-      summary_data <- specific_activity_results() %>%
-        group_by(Microorganism) %>%
-        summarise(Mean = mean(Specific_Activity_U_mg, na.rm = TRUE), 
-                  SD = sd(Specific_Activity_U_mg, na.rm = TRUE), 
-                  SE = SD/sqrt(n()),
-                  CI_Lower = Mean - 1.96*SE, CI_Upper = Mean + 1.96*SE, .groups = "drop")
-      
-      ggplot(summary_data, aes(x = Microorganism, y = Mean, fill = Microorganism)) +
-        geom_bar(stat = "identity", color = "black", alpha = 0.8, width = 0.7) +
-        geom_errorbar(aes(ymin = CI_Lower, ymax = CI_Upper), width = 0.25, size = 1.2) +
-        theme_minimal(base_size = 13) +
-        theme(legend.position = "none", axis.text.x = element_text(angle = 45, hjust = 1)) +
-        labs(title = "Mean with 95% CI", x = "Microorganism", y = "U/mg") +
-        scale_fill_brewer(palette = "Set2")
-    })
-    
-    output$plot_barplot_grouped <- renderPlot({
-      req(specific_activity_results())
-      
-      summary_data <- specific_activity_results() %>%
-        group_by(Microorganism) %>%
-        summarise(Mean = mean(Specific_Activity_U_mg, na.rm = TRUE), 
-                  SD = sd(Specific_Activity_U_mg, na.rm = TRUE), 
-                  SE = SD/sqrt(n()),
-                  CI_Lower = Mean - 1.96*SE, CI_Upper = Mean + 1.96*SE, .groups = "drop")
-      
-      letter_groups <- get_tukey_letters(specific_activity_results())
-      
-      if(!is.null(letter_groups)) {
-        summary_data <- merge(summary_data, letter_groups, by = "Microorganism")
-      } else {
-        summary_data$letter <- ""
       }
-      
-      max_y <- max(summary_data$CI_Upper, na.rm = TRUE)
-      y_limit <- max_y * 1.15
-      
-      ggplot(summary_data, aes(x = Microorganism, y = Mean, fill = Microorganism)) +
-        geom_bar(stat = "identity", color = "black", alpha = 0.8, width = 0.7) +
-        geom_errorbar(aes(ymin = CI_Lower, ymax = CI_Upper), width = 0.25, size = 1.2) +
-        geom_text(aes(y = CI_Upper + max_y*0.07, label = letter), size = 6, fontface = "bold") +
-        theme_minimal(base_size = 13) +
-        theme(legend.position = "none", axis.text.x = element_text(angle = 45, hjust = 1)) +
-        labs(title = "Tukey HSD Grouping", x = "Microorganism", y = "U/mg", 
-             caption = "Same letter = not significant (p > 0.05)") +
-        scale_fill_brewer(palette = "Set2") +
-        ylim(0, y_limit)
-    })
-    
-    output$plot_cv <- renderPlot({
-      req(specific_activity_results())
-      cv_data <- specific_activity_results() %>%
-        group_by(Microorganism) %>%
-        summarise(CV = (sd(Specific_Activity_U_mg, na.rm = TRUE) / mean(Specific_Activity_U_mg, na.rm = TRUE)) * 100, .groups = "drop")
-      
-      ggplot(cv_data, aes(x = Microorganism, y = CV, fill = Microorganism)) +
-        geom_bar(stat = "identity", color = "black", alpha = 0.8, width = 0.7) +
-        geom_hline(yintercept = c(5, 10, 20), linetype = "dashed", color = c("green", "orange", "red"), size = 1) +
-        theme_minimal(base_size = 13) +
-        theme(legend.position = "none", axis.text.x = element_text(angle = 45, hjust = 1)) +
-        labs(title = "CV% Quality", x = "Microorganism", y = "CV (%)") +
-        scale_fill_brewer(palette = "Spectral")
-    })
-    
-    # ===== STATISTICS =====
-    
-    output$quant_descriptive_stats <- renderPrint({
-      req(specific_activity_results())
-      cat("DESCRIPTIVE STATISTICS\n")
-      stats <- specific_activity_results() %>%
-        group_by(Microorganism) %>%
-        summarise(N = n(), Mean = mean(Specific_Activity_U_mg, na.rm = TRUE), 
-                  SD = sd(Specific_Activity_U_mg, na.rm = TRUE), 
-                  SE = SD/sqrt(N), CV_Percent = (SD/Mean)*100, 
-                  Min = min(Specific_Activity_U_mg, na.rm = TRUE), 
-                  Max = max(Specific_Activity_U_mg, na.rm = TRUE), .groups = "drop")
-      print(stats, n = Inf)
-    })
-    
-    output$quant_anova_results <- renderPrint({
-      req(specific_activity_results())
-      if(n_distinct(specific_activity_results()$Microorganism) < 2) {
-        cat("Insufficient groups for ANOVA\n")
-        return()
-      }
-      model <- aov(Specific_Activity_U_mg ~ Microorganism, data = specific_activity_results())
-      cat("ONE-WAY ANOVA\n\n")
-      print(summary(model))
-    })
-    
-    output$quant_posthoc_results <- renderPrint({
-      req(specific_activity_results())
-      if(n_distinct(specific_activity_results()$Microorganism) < 2) return()
-      model <- aov(Specific_Activity_U_mg ~ Microorganism, data = specific_activity_results())
-      cat("TUKEY HSD TEST\n\n")
-      print(TukeyHSD(model))
-    })
-    
-    # ===== QUALITATIVE MODULE =====
-    
-    output$dl_qualitative_template <- downloadHandler(
-      filename = "qualitative_zone.csv",
-      content = function(file) {
-        df <- data.frame(Sample_ID = c("Q1", "Q1", "Q1", "Q2", "Q2", "Q2", "Q3", "Q3", "Q3"),
-                         Microorganism = c("Org_A", "Org_A", "Org_A", "Org_B", "Org_B", "Org_B", "Org_C", "Org_C", "Org_C"),
-                         Replicate = c(1, 2, 3, 1, 2, 3, 1, 2, 3),
-                         Colony_Diameter_mm = c(5.0, 5.2, 5.1, 4.8, 5.1, 4.9, 5.3, 5.0, 5.2),
-                         Zone_Diameter_mm = c(15.2, 14.8, 15.0, 12.5, 13.0, 12.7, 18.5, 17.8, 18.2))
-        write.csv(df, file, row.names = FALSE)
-      }
-    )
-    
-    observeEvent(input$calc_qualitative, {
-      req(input$qualitative_data_file)
-      qual_data <- read.csv(input$qualitative_data_file$datapath, stringsAsFactors = FALSE)
-      qual_data$Enzymatic_Index <- qual_data$Zone_Diameter_mm / qual_data$Colony_Diameter_mm
-      qual_data$Activity_Rating <- cut(qual_data$Enzymatic_Index, 
-                                       breaks = c(-Inf, 1, 2, 3, 5, Inf),
-                                       labels = c("None", "Weak", "Moderate", "Strong", "Very Strong"))
-      qualitative_results(qual_data)
-      showNotification("✓ Calculated!", type = "message", duration = 2)
-    })
-    
-    output$qualitative_results_table <- renderDT({
-      req(qualitative_results())
-      display_cols <- c("Sample_ID", "Microorganism", "Replicate", "Colony_Diameter_mm", 
-                        "Zone_Diameter_mm", "Enzymatic_Index", "Activity_Rating")
-      datatable(qualitative_results()[, display_cols], options = list(pageLength = 20, scrollX = TRUE)) %>%
-        formatRound(columns = which(sapply(qualitative_results()[, display_cols], is.numeric)), digits = 3)
-    })
-    
-    output$qualitative_stats_table <- renderDT({
-      req(qualitative_results())
-      stats <- qualitative_results() %>%
-        group_by(Microorganism) %>%
-        summarise(N = n(), Mean_EI = mean(Enzymatic_Index, na.rm = TRUE), 
-                  SD = sd(Enzymatic_Index, na.rm = TRUE), SE = SD/sqrt(N), 
-                  CV_Percent = (SD/Mean_EI)*100, .groups = "drop")
-      datatable(stats) %>% formatRound(columns = 2:5, digits = 3)
-    })
-    
-    output$qual_descriptive_stats <- renderPrint({
-      req(qualitative_results())
-      cat("DESCRIPTIVE STATISTICS\n")
-      stats <- qualitative_results() %>%
-        group_by(Microorganism) %>%
-        summarise(N = n(), Mean = mean(Enzymatic_Index, na.rm = TRUE), 
-                  SD = sd(Enzymatic_Index, na.rm = TRUE), SE = SD/sqrt(N), .groups = "drop")
-      print(stats, n = Inf)
-    })
-    
-    output$qual_anova_results <- renderPrint({
-      req(qualitative_results())
-      if(n_distinct(qualitative_results()$Microorganism) < 2) {
-        cat("Insufficient groups\n")
-        return()
-      }
-      model <- aov(Enzymatic_Index ~ Microorganism, data = qualitative_results())
-      cat("ONE-WAY ANOVA\n\n")
-      print(summary(model))
-    })
-    
-    output$qual_posthoc_results <- renderPrint({
-      req(qualitative_results())
-      if(n_distinct(qualitative_results()$Microorganism) < 2) return()
-      model <- aov(Enzymatic_Index ~ Microorganism, data = qualitative_results())
-      cat("TUKEY HSD\n\n")
-      print(TukeyHSD(model))
-    })
-    
-    output$plot_qual_boxplot <- renderPlot({
-      req(qualitative_results())
-      ggplot(qualitative_results(), aes(x = Microorganism, y = Enzymatic_Index, 
-                                        fill = Microorganism)) +
-        geom_boxplot(alpha = 0.7) +
-        geom_jitter(width = 0.2, alpha = 0.5, size = 2) +
-        theme_minimal(base_size = 13) +
-        theme(legend.position = "none", axis.text.x = element_text(angle = 45, hjust = 1)) +
-        labs(title = "Enzymatic Index", x = "Microorganism", y = "Index") +
-        scale_fill_brewer(palette = "Set1")
+      return(data.frame(Microorganism = names(letters), letter = letters, stringsAsFactors = FALSE))
+    }, error = function(e) {
+      return(NULL)
     })
   }
-  )
-  # ===== LAUNCH =====
   
-  shinyApp(ui = ui, server = server)
+  output$plot_specific_activity <- renderPlot({
+    req(specific_activity_results())
+    summary_data <- specific_activity_results() %>%
+      group_by(Microorganism) %>%
+      summarise(Mean = mean(Specific_Activity_U_mg, na.rm = TRUE), 
+                SE = sd(Specific_Activity_U_mg, na.rm = TRUE) / sqrt(n()), .groups = "drop")
+    
+    ggplot(summary_data, aes(x = Microorganism, y = Mean, fill = Microorganism)) +
+      geom_bar(stat = "identity", color = "black", alpha = 0.8, width = 0.7) +
+      geom_errorbar(aes(ymin = Mean - SE, ymax = Mean + SE), width = 0.25, size = 1) +
+      theme_minimal(base_size = 13) +
+      theme(legend.position = "none", axis.text.x = element_text(angle = 45, hjust = 1)) +
+      labs(title = "Mean Specific Activity ± SE", x = "Microorganism", y = "U/mg") +
+      scale_fill_brewer(palette = "Set2")
+  })
+  
+  output$plot_all_replicates <- renderPlot({
+    req(specific_activity_results())
+    ggplot(specific_activity_results(), aes(x = Microorganism, y = Specific_Activity_U_mg, 
+                                            color = as.factor(Replicate))) +
+      geom_point(size = 4, alpha = 0.8, position = position_dodge(width = 0.3)) +
+      theme_minimal(base_size = 13) +
+      theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+      labs(title = "All Replicate Values", x = "Microorganism", y = "U/mg", color = "Replicate") +
+      scale_color_manual(values = c("1" = "#FF6B6B", "2" = "#4ECDC4", "3" = "#45B7D1"))
+  })
+  
+  output$plot_boxplot_activity <- renderPlot({
+    req(specific_activity_results())
+    ggplot(specific_activity_results(), aes(x = Microorganism, y = Specific_Activity_U_mg, 
+                                            fill = Microorganism)) +
+      geom_boxplot(alpha = 0.7) +
+      geom_jitter(width = 0.2, alpha = 0.5, size = 2) +
+      theme_minimal(base_size = 13) +
+      theme(legend.position = "none", axis.text.x = element_text(angle = 45, hjust = 1)) +
+      labs(title = "Distribution with Replicates", x = "Microorganism", y = "U/mg") +
+      scale_fill_brewer(palette = "Set1")
+  })
+  
+  output$plot_barplot_activity <- renderPlot({
+    req(specific_activity_results())
+    summary_data <- specific_activity_results() %>%
+      group_by(Microorganism) %>%
+      summarise(Mean = mean(Specific_Activity_U_mg, na.rm = TRUE), 
+                SD = sd(Specific_Activity_U_mg, na.rm = TRUE), 
+                SE = SD/sqrt(n()),
+                CI_Lower = Mean - 1.96*SE, CI_Upper = Mean + 1.96*SE, .groups = "drop")
+    
+    ggplot(summary_data, aes(x = Microorganism, y = Mean, fill = Microorganism)) +
+      geom_bar(stat = "identity", color = "black", alpha = 0.8, width = 0.7) +
+      geom_errorbar(aes(ymin = CI_Lower, ymax = CI_Upper), width = 0.25, size = 1.2) +
+      theme_minimal(base_size = 13) +
+      theme(legend.position = "none", axis.text.x = element_text(angle = 45, hjust = 1)) +
+      labs(title = "Mean with 95% CI", x = "Microorganism", y = "U/mg") +
+      scale_fill_brewer(palette = "Set2")
+  })
+  
+  output$plot_barplot_grouped <- renderPlot({
+    req(specific_activity_results())
+    
+    summary_data <- specific_activity_results() %>%
+      group_by(Microorganism) %>%
+      summarise(Mean = mean(Specific_Activity_U_mg, na.rm = TRUE), 
+                SD = sd(Specific_Activity_U_mg, na.rm = TRUE), 
+                SE = SD/sqrt(n()),
+                CI_Lower = Mean - 1.96*SE, CI_Upper = Mean + 1.96*SE, .groups = "drop")
+    
+    letter_groups <- get_tukey_letters(specific_activity_results())
+    
+    if(!is.null(letter_groups)) {
+      summary_data <- merge(summary_data, letter_groups, by = "Microorganism")
+    } else {
+      summary_data$letter <- ""
+    }
+    
+    max_y <- max(summary_data$CI_Upper, na.rm = TRUE)
+    y_limit <- max_y * 1.15
+    
+    ggplot(summary_data, aes(x = Microorganism, y = Mean, fill = Microorganism)) +
+      geom_bar(stat = "identity", color = "black", alpha = 0.8, width = 0.7) +
+      geom_errorbar(aes(ymin = CI_Lower, ymax = CI_Upper), width = 0.25, size = 1.2) +
+      geom_text(aes(y = CI_Upper + max_y*0.07, label = letter), size = 6, fontface = "bold") +
+      theme_minimal(base_size = 13) +
+      theme(legend.position = "none", axis.text.x = element_text(angle = 45, hjust = 1)) +
+      labs(title = "Tukey HSD Grouping", x = "Microorganism", y = "U/mg", 
+           caption = "Same letter = not significant (p > 0.05)") +
+      scale_fill_brewer(palette = "Set2") +
+      ylim(0, y_limit)
+  })
+  
+  output$plot_cv <- renderPlot({
+    req(specific_activity_results())
+    cv_data <- specific_activity_results() %>%
+      group_by(Microorganism) %>%
+      summarise(CV = (sd(Specific_Activity_U_mg, na.rm = TRUE) / mean(Specific_Activity_U_mg, na.rm = TRUE)) * 100, .groups = "drop")
+    
+    ggplot(cv_data, aes(x = Microorganism, y = CV, fill = Microorganism)) +
+      geom_bar(stat = "identity", color = "black", alpha = 0.8, width = 0.7) +
+      geom_hline(yintercept = c(5, 10, 20), linetype = "dashed", color = c("green", "orange", "red"), size = 1) +
+      theme_minimal(base_size = 13) +
+      theme(legend.position = "none", axis.text.x = element_text(angle = 45, hjust = 1)) +
+      labs(title = "CV% Quality", x = "Microorganism", y = "CV (%)") +
+      scale_fill_brewer(palette = "Spectral")
+  })
+  
+  # ===== STATISTICS =====
+  
+  output$quant_descriptive_stats <- renderPrint({
+    req(specific_activity_results())
+    cat("DESCRIPTIVE STATISTICS\n")
+    stats <- specific_activity_results() %>%
+      group_by(Microorganism) %>%
+      summarise(N = n(), Mean = mean(Specific_Activity_U_mg, na.rm = TRUE), 
+                SD = sd(Specific_Activity_U_mg, na.rm = TRUE), 
+                SE = SD/sqrt(N), CV_Percent = (SD/Mean)*100, 
+                Min = min(Specific_Activity_U_mg, na.rm = TRUE), 
+                Max = max(Specific_Activity_U_mg, na.rm = TRUE), .groups = "drop")
+    print(stats, n = Inf)
+  })
+  
+  output$quant_anova_results <- renderPrint({
+    req(specific_activity_results())
+    if(n_distinct(specific_activity_results()$Microorganism) < 2) {
+      cat("Insufficient groups for ANOVA\n")
+      return()
+    }
+    model <- aov(Specific_Activity_U_mg ~ Microorganism, data = specific_activity_results())
+    cat("ONE-WAY ANOVA\n\n")
+    print(summary(model))
+  })
+  
+  output$quant_posthoc_results <- renderPrint({
+    req(specific_activity_results())
+    if(n_distinct(specific_activity_results()$Microorganism) < 2) return()
+    model <- aov(Specific_Activity_U_mg ~ Microorganism, data = specific_activity_results())
+    cat("TUKEY HSD TEST\n\n")
+    print(TukeyHSD(model))
+  })
+  
+  # ===== QUALITATIVE MODULE =====
+  
+  output$dl_qualitative_template <- downloadHandler(
+    filename = "qualitative_zone.csv",
+    content = function(file) {
+      df <- data.frame(Sample_ID = c("Q1", "Q1", "Q1", "Q2", "Q2", "Q2", "Q3", "Q3", "Q3"),
+                       Microorganism = c("Org_A", "Org_A", "Org_A", "Org_B", "Org_B", "Org_B", "Org_C", "Org_C", "Org_C"),
+                       Replicate = c(1, 2, 3, 1, 2, 3, 1, 2, 3),
+                       Colony_Diameter_mm = c(5.0, 5.2, 5.1, 4.8, 5.1, 4.9, 5.3, 5.0, 5.2),
+                       Zone_Diameter_mm = c(15.2, 14.8, 15.0, 12.5, 13.0, 12.7, 18.5, 17.8, 18.2))
+      write.csv(df, file, row.names = FALSE)
+    }
+  )
+  
+  observeEvent(input$calc_qualitative, {
+    req(input$qualitative_data_file)
+    qual_data <- read.csv(input$qualitative_data_file$datapath, stringsAsFactors = FALSE)
+    qual_data$Enzymatic_Index <- qual_data$Zone_Diameter_mm / qual_data$Colony_Diameter_mm
+    qual_data$Activity_Rating <- cut(qual_data$Enzymatic_Index, 
+                                     breaks = c(-Inf, 1, 2, 3, 5, Inf),
+                                     labels = c("None", "Weak", "Moderate", "Strong", "Very Strong"))
+    qualitative_results(qual_data)
+    showNotification("✓ Calculated!", type = "message", duration = 2)
+  })
+  
+  output$qualitative_results_table <- renderDT({
+    req(qualitative_results())
+    display_cols <- c("Sample_ID", "Microorganism", "Replicate", "Colony_Diameter_mm", 
+                      "Zone_Diameter_mm", "Enzymatic_Index", "Activity_Rating")
+    datatable(qualitative_results()[, display_cols], options = list(pageLength = 20, scrollX = TRUE)) %>%
+      formatRound(columns = which(sapply(qualitative_results()[, display_cols], is.numeric)), digits = 3)
+  })
+  
+  output$qualitative_stats_table <- renderDT({
+    req(qualitative_results())
+    stats <- qualitative_results() %>%
+      group_by(Microorganism) %>%
+      summarise(N = n(), Mean_EI = mean(Enzymatic_Index, na.rm = TRUE), 
+                SD = sd(Enzymatic_Index, na.rm = TRUE), SE = SD/sqrt(N), 
+                CV_Percent = (SD/Mean_EI)*100, .groups = "drop")
+    datatable(stats) %>% formatRound(columns = 2:5, digits = 3)
+  })
+  
+  output$qual_descriptive_stats <- renderPrint({
+    req(qualitative_results())
+    cat("DESCRIPTIVE STATISTICS\n")
+    stats <- qualitative_results() %>%
+      group_by(Microorganism) %>%
+      summarise(N = n(), Mean = mean(Enzymatic_Index, na.rm = TRUE), 
+                SD = sd(Enzymatic_Index, na.rm = TRUE), SE = SD/sqrt(N), .groups = "drop")
+    print(stats, n = Inf)
+  })
+  
+  output$qual_anova_results <- renderPrint({
+    req(qualitative_results())
+    if(n_distinct(qualitative_results()$Microorganism) < 2) {
+      cat("Insufficient groups\n")
+      return()
+    }
+    model <- aov(Enzymatic_Index ~ Microorganism, data = qualitative_results())
+    cat("ONE-WAY ANOVA\n\n")
+    print(summary(model))
+  })
+  
+  output$qual_posthoc_results <- renderPrint({
+    req(qualitative_results())
+    if(n_distinct(qualitative_results()$Microorganism) < 2) return()
+    model <- aov(Enzymatic_Index ~ Microorganism, data = qualitative_results())
+    cat("TUKEY HSD\n\n")
+    print(TukeyHSD(model))
+  })
+  
+  output$plot_qual_boxplot <- renderPlot({
+    req(qualitative_results())
+    ggplot(qualitative_results(), aes(x = Microorganism, y = Enzymatic_Index, 
+                                      fill = Microorganism)) +
+      geom_boxplot(alpha = 0.7) +
+      geom_jitter(width = 0.2, alpha = 0.5, size = 2) +
+      theme_minimal(base_size = 13) +
+      theme(legend.position = "none", axis.text.x = element_text(angle = 45, hjust = 1)) +
+      labs(title = "Enzymatic Index", x = "Microorganism", y = "Index") +
+      scale_fill_brewer(palette = "Set1")
+  })
+}
+
+# ===== LAUNCH =====
+
+shinyApp(ui = ui, server = server)
