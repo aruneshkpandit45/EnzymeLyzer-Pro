@@ -13,7 +13,6 @@ library(dplyr)
 library(tidyr)
 library(DT)
 
-# ===== ENZYME CONFIGURATION =====
 enzyme_config <- list(
   Cellulase = list(
     standard_product = "Glucose",
@@ -59,7 +58,6 @@ enzyme_config <- list(
   )
 )
 
-# ===== DEVELOPER INFORMATION =====
 your_name <- "Arunesh Kumar"
 your_institution <- "Indian Agricultural Research Institute, New Delhi"
 your_department <- "Department of Entomology"
@@ -191,7 +189,7 @@ ui <- fluidPage(
  
   div(class = "enzyme-header",
       div(class = "enzyme-header-top",
-          img(src = "www/enzymelyzer_logo.png", height = "120px"),
+          img(src = "enzymelyzer_logo.png", height = "120px"),
           div(class = "enzyme-title",
               h1("EnzymeLyzer Pro"),
               p("Quantitative Enzyme Assay Analysis Platform")
