@@ -39,22 +39,10 @@ EnzymeLyzer-Pro/
         ├── full_protocol.md
 ├── LICENSE
 ├── README.md
-Installation
-Prerequisites
-R (version 4.x or newer)
 
-R packages: shiny, ggplot2, dplyr, tidyr, DT
-
-Local Run
-r
-setwd("C:/Users/arune/Desktop/EnzymeLyzer-Pro")
-library(shiny)
-runApp("app.R")
 Deployment
 Ready for easy one-click deploy at shinyapps.io
-
-Full instructions in docs/INSTALLATION.md
-
+https://akpandit.shinyapps.io/enzymelyzer-pro/
 Usage
 Prepare your experimental data using the CSV templates in data/templates/.
 
