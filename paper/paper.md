@@ -49,4 +49,10 @@ Arunesh Kumar developed the software, designed the analytical workflow, and impl
 
 ## References
 
-(Add 2–3 key references later, e.g., enzyme assay methods, statistical analysis papers)
+@article{bradford1976}
+
+@article{miller1959}
+
+@article{tukey1949}
+
+@book{r_core}
