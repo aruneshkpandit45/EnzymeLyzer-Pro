@@ -35,6 +35,8 @@ EnzymeLyzer-Pro/
 │       ├── lipase_standards.csv
 │       ├── invertase_standards.csv
 │       ├── protease_standards.csv
+├── protocols/
+        ├── full_protocol.md
 ├── LICENSE
 ├── README.md
 Installation
