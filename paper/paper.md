@@ -37,7 +37,12 @@ Existing tools lack integration of enzyme-specific workflows, statistical valida
 
 ## Acknowledgements
 
-The author acknowledges the guidance of Dr. S. Subramanian (Principal Scientist, IARI) for support in experimental design and methodology development.
+## Acknowledgements
+
+The authors acknowledge the support and facilities provided by the Division of Entomology, ICAR-Indian Agricultural Research Institute (IARI), New Delhi, IARI Assam.
+
+Special thanks to Dr. S. Subramanian for guidance in experimental design, enzyme assay methodology, and scientific supervision.
+
 
 ---
 
