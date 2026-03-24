@@ -719,6 +719,8 @@ Activity (U/mL) = µmol tyrosine released per minute per mL enzyme"
         },
         
         "</p>",
+          "<br><br>",
+"<a href='https://github.com/aruneshkpandit45/EnzymeLyzer-Pro/blob/main/protocols/full_protocol.md' target='_blank' style='color:#2980b9; font-weight:bold;'>📄 View Full Protocol</a>",
         sep = "\n"
       )),
       easyClose = TRUE,
