@@ -1,24 +1,53 @@
-EnzymeLyzer Pro
-Quantitative Enzyme Assay Analysis Platform | R/Shiny
+# EnzymeLyzer Pro
 
-Overview
-EnzymeLyzer Pro is an interactive, open-source R/Shiny application for robust analysis and visualization of protein and enzyme assay data. It supports multi-replicate studies, automated calculations, statistical grouping, and publication-quality visual output suitable for scientific research and thesis work.
+### Quantitative Enzyme Assay Analysis Platform | R/Shiny
 
-Core Features
-Multi-enzyme configuration: Cellulase, Hemicellulase, Pectinase, Lipase, Invertase, Protease
+---
 
-Stepwise workflow covering protein estimation, enzyme activity, product concentration, specific activity, and qualitative analyses
+## Overview
 
-Built-in statistical analysis: ANOVA, Tukey HSD post-hoc, and CV% precision checks
+EnzymeLyzer Pro is an interactive, open-source R/Shiny application for robust analysis and visualization of protein and enzyme assay data.
 
-Grouped bar plots with significance letters for easy interpretation
+The platform supports multi-replicate experiments, automated calculations, statistical analysis, and publication-quality outputs suitable for scientific research and thesis work.
 
-Automated quality, error bar, and replicate reporting
+---
 
-Easy-to-use CSV templates and sample data
+## Core Features
 
-Directory Structure
-text
+* Multi-enzyme configuration:
+  Cellulase, Hemicellulase, Pectinase, Lipase, Invertase, Protease
+
+* Stepwise workflow:
+
+  * Protein estimation
+  * Enzyme activity
+  * Product concentration
+  * Specific activity
+  * Qualitative analysis
+
+* Built-in statistical analysis:
+
+  * One-way ANOVA
+  * Tukey HSD post-hoc test
+  * Coefficient of Variation (CV%)
+
+* Visualization:
+
+  * Grouped bar plots with significance letters
+  * Error bars and replicate summaries
+  * Publication-quality graphical output
+
+* Data handling:
+
+  * Multi-replicate support
+  * Automated calculations
+  * Ready-to-use CSV templates
+
+---
+
+##  Directory Structure
+
+```
 EnzymeLyzer-Pro/
 ├── app.R
 ├── www/
@@ -35,47 +64,81 @@ EnzymeLyzer-Pro/
 │       ├── lipase_standards.csv
 │       ├── invertase_standards.csv
 │       ├── protease_standards.csv
-├── paper/      
+├── paper/
 │   ├── paper.md
 │   └── paper.bib
 ├── protocols/
-        ├── full_protocol.md
+│   └── full_protocol.md
 ├── LICENSE
 ├── README.md
+```
 
-Deployment
-Ready for easy one-click deploy at shinyapps.io
-https://akpandit.shinyapps.io/enzymelyzer-pro/
-Usage
-Prepare your experimental data using the CSV templates in data/templates/.
+---
 
-Launch the app.
+## Live Application
 
-Begin with the "Protein Estimation" tab, then proceed through the workflow tabs.
+ https://akpandit.shinyapps.io/enzymelyzer-pro/
 
-Download results and figures as needed for publication/thesis.
+The app may take a few seconds to load initially due to server activation.
 
-Citation
-Arunesh Kumar & S. Subramanian (2025). EnzymeLyzer Pro: An R/Shiny platform for quantitative enzyme assay analysis and visualization. GitHub
+---
 
-License
-Released under the MIT License.
-See LICENSE for details.
+## Usage
 
-Development Team
-Arunesh Kumar
+1. Prepare experimental data using CSV templates (`data/templates/`)
+2. Launch the application
+3. Start with **Protein Estimation**
+4. Proceed sequentially through workflow tabs
+5. Export results and figures for publication or thesis
+
+---
+
+## Output
+
+* Enzyme Activity (U/mL)
+* Specific Activity (U/mg protein)
+* Product concentration
+* ANOVA and Tukey HSD results
+* CV% (replication quality metrics)
+* Publication-ready plots
+
+---
+
+## Citation
+
+Arunesh Kumar & S. Subramanian (2025).
+**EnzymeLyzer Pro: An R/Shiny platform for quantitative enzyme assay analysis and visualization.**
+GitHub Repository.
+
+---
+
+## Development Team
+
+**Arunesh Kumar**
 Lead Developer
-Indian Agricultural Research Institute, New Delhi
-Email: akpandit.iari@gmail.com
+ICAR–Indian Agricultural Research Institute (IARI), New Delhi
+[akpandit.iari@gmail.com](mailto:akpandit.iari@gmail.com)
 
-Dr. S. Subramanian
+**Dr. S. Subramanian**
 Principal Advisor & Co-Developer
-Molecular Entomology Laboratory
-Email: entosubra@yahoo.co.in
+Division of Entomology, ICAR-IARI
+ [entosubra@yahoo.co.in](mailto:entosubra@yahoo.co.in)
 
-Help & Support
-Open an issue on GitHub for bug reports or feature requests.
+---
 
-Email Arunesh Kumar for questions (akpandit.iari@gmail.com).
+## Support
 
-© 2025 Arunesh Kumar & Dr. S. Subramanian | Released under the MIT License
+* Open an issue on GitHub for bug reports or feature requests
+* Contact via email for academic queries
+
+---
+
+## License
+
+Released under the MIT License. See `LICENSE` file for details.
+
+---
+
+## © Copyright
+
+© 2025 Arunesh Kumar & Dr. S. Subramanian
