@@ -11,7 +11,7 @@ tags:
   email: [akpandit.iari@gmail.com](mailto:akpandit.iari@gmail.com)
 * name: S. Subramanian
   affiliation: 1
-* name: Raja Rushi
+* name: C N Rajarushi
   affiliation: 1
 * name: Sai Manoj Marella
   affiliation: 1
@@ -19,7 +19,7 @@ tags:
   affiliation: 1
 * name: Pavan JS
   affiliation: 1
-* name: Amit
+* name: Amit Umesh Paschapur
   affiliation: 1
   affiliations:
 * name: ICAR-Indian Agricultural Research Institute (IARI), New Delhi, India
