@@ -1,8 +1,5 @@
 # EnzymeLyzer Pro
 # Professional Enzyme Assay Analysis Platform
-# Developer Information:
-# - Arunesh Kumar (Lead Developer, IARI New Delhi, Entomology)
-# - Dr. S. Subramanian (Principal Advisor & Co-Developer)
 # Version: 1.0.0 (Production Ready)
 # License: MIT
 # Last Updated: November 2025
@@ -13,6 +10,7 @@ library(dplyr)
 library(tidyr)
 library(DT)
 
+# ===== ENZYME CONFIGURATION =====
 enzyme_config <- list(
   Cellulase = list(
     standard_product = "Glucose",
@@ -58,18 +56,28 @@ enzyme_config <- list(
   )
 )
 
-your_name <- "Arunesh Kumar"
-your_institution <- "Indian Agricultural Research Institute, New Delhi"
-your_department <- "Department of Entomology"
-your_email <- "akpandit.iari@gmail.com"
-your_github <- "aruneshkpandit45"
+# ===== DEVELOPER INFORMATION =====
+developer_name <- "Arunesh Kumar"
+developer_institution <- "Indian Agricultural Research Institute, New Delhi"
+developer_department <- "Department of Entomology"
+developer_email <- "akpandit.iari@gmail.com"
+developer_github <- "aruneshkpandit45"
 advisor_name <- "Dr. S. Subramanian (Principal Scientist and Professor Division of Entomology ICAR-IARI New Delhi)"
 advisor_email <- "entosubra@yahoo.co.in"
 lab_name <- "Molecular Entomology Laboratory"
+# ===== CO-DEVELOPERS =====
+co_developers <- list(
+  list(name = "C N Rajarushi", role = "Statistical Analysis"),
+  list(name = "Sai Manoj Marella", role = "UI Design"),
+  list(name = "Preeti Sharma", role = "UI Design"),
+  list(name = "Pavan JS", role = "Enzyme Workflow & Protocol Design"),
+  list(name = "Amit Umesh Paschapur", role = "Enzyme Workflow & Protocol Design")
+)
 
-
+# ===== USER INTERFACE =====
 ui <- fluidPage(
   
+  # ===== CSS FOR HEADER WITH HORIZONTAL TABS =====
   tags$style(HTML("
     .enzyme-header {
       background: linear-gradient(135deg, #ecf0f1 0%, #f8f9f9 100%);
@@ -186,10 +194,13 @@ ui <- fluidPage(
     }
   ")),
 
- 
+  # ===== HEADER WITH TABS =====
   div(class = "enzyme-header",
       div(class = "enzyme-header-top",
-          img(src = "enzymelyzer_logo.png", height = "120px"),
+          tags$img(
+            src = "www/enzymelyzer_logo.png",
+            height = "200px"
+          ),
           div(class = "enzyme-title",
               h1("EnzymeLyzer Pro"),
               p("Quantitative Enzyme Assay Analysis Platform")
@@ -276,30 +287,47 @@ ui <- fluidPage(
                  
                  h3("Development Team", style = "color: #2980b9;"),
                  
-                 h4("Lead Developer", style = "color: #34495e;"),
-                 div(style = "background-color: #e8f4f8; padding: 15px; border-radius: 5px;",
-                     p(strong("Name:"), your_name, br(),
-                       strong("Institution:"), your_institution, br(),
-                       strong("Department:"), your_department, br(),
-                       strong("Email:"), a(your_email, href = paste0("mailto:", your_email), style = "color: #2980b9;"), br(),
-                       strong("GitHub:"), a(your_github, href = paste0("https://github.com/", your_github), target = "_blank", style = "color: #2980b9;"),
-                       style = "line-height: 1.8; margin: 0;")
+                 div(style = "background-color: #eaf4fb; padding: 18px; border-radius: 10px;",
+                     h5("👨‍💻 Lead Developer", style = "margin-top:0; color:#2c3e50;"),
+                     p(
+                       strong("Arunesh Kumar"), br(),
+                       "ICAR–Indian Agricultural Research Institute (IARI), New Delhi", br(),
+                       "Division of Entomology", br(),
+                       a(developer_email, href = paste0("mailto:", developer_email), style = "color:#2980b9;"), br(),
+                       a(developer_github, href = paste0("https://github.com/", developer_github), target = "_blank"),
+                       style = "line-height:1.7; margin:0;"
+                     )
                  ),
                  
-                 h4("Principal Advisor & Co-Developer", style = "color: #34495e;"),
-                 div(style = "background-color: #fef9e7; padding: 15px; border-radius: 5px; margin-top: 10px;",
-                     p(strong("Name:"), advisor_name, br(),
-                       strong("Affiliation:"), lab_name, br(),
-                       strong("Email:"), a(advisor_email, href = paste0("mailto:", advisor_email), style = "color: #2980b9;"), br(),
-                       strong("Role:"), "Research guidance and methodology development",
-                       style = "line-height: 1.8; margin: 0;")
+                 div(style = "background-color: #fff7e6; padding: 18px; border-radius: 10px; margin-top: 12px;",
+                     h5("🧠 Scientific Advisor", style = "margin-top:0; color:#2c3e50;"),
+                     p(
+                       strong("Dr. S. Subramanian"), br(),
+                       "Principal Scientist", br(),
+                       "Division of Entomology, ICAR-IARI, New Delhi", br(),
+                       "Molecular Entomology Laboratory", br(),
+                       a(advisor_email, href = paste0("mailto:", advisor_email), style = "color:#2980b9;"),
+                       style = "line-height:1.7; margin:0;"
+                     )
+                 ),
+                 div(style = "background-color: #f3eefc; padding: 18px; border-radius: 10px; margin-top: 12px;",
+                     h5("👥 Co-Developers", style = "margin-top:0; color:#2c3e50;"),
+                     
+                     tags$ul(style = "padding-left:18px; margin:0;",
+                             lapply(co_developers, function(dev) {
+                               tags$li(
+                                 tags$span(style="font-weight:600;", dev$name),
+                                 paste0(" — ", dev$role)
+                               )
+                             })
+                     )
                  ),
                  
                  hr(style = "border-top: 2px solid #2980b9;"),
                  
                  h3("Technical Support", style = "color: #2980b9;"),
                  tags$ul(
-                   tags$li("Email: ", a(your_email, href = paste0("mailto:", your_email))),
+                   tags$li("Email: ", a(developer_email, href = paste0("mailto:", developer_email))),
                    tags$li("Advisor: ", a(advisor_email, href = paste0("mailto:", advisor_email)))
                  ),
                  
@@ -384,7 +412,7 @@ ui <- fluidPage(
                      ),
         
 
-        tabPanel("1. Protein Estimation",
+        tabPanel("Protein Estimation",
                  h3("Bradford Protein Assay"),
                  
                  fluidRow(
@@ -591,6 +619,9 @@ ui <- fluidPage(
   )
 )
   
+
+
+# ===== SERVER =====
 server <- function(input, output, session) {
   
   output$enzyme_info_display1 <- renderText(paste("Enzyme Type:", input$enzyme_type_nav))
@@ -719,8 +750,8 @@ Activity (U/mL) = µmol tyrosine released per minute per mL enzyme"
         },
         
         "</p>",
-          "<br><br>",
-"<a href='https://github.com/aruneshkpandit45/EnzymeLyzer-Pro/blob/main/protocols/full_protocol.md' target='_blank' style='color:#2980b9; font-weight:bold;'>📄 View Full Protocol</a>",
+        "<br><br>",
+        "<a href='https://github.com/aruneshkpandit45/EnzymeLyzer-Pro/blob/main/protocols/full_protocol.md' target='_blank' style='color:#2980b9; font-weight:bold;'>📄 View Full Protocol</a>",
         sep = "\n"
       )),
       easyClose = TRUE,
@@ -834,7 +865,9 @@ Activity (U/mL) = µmol tyrosine released per minute per mL enzyme"
       write.csv(protein_results(), file, row.names = FALSE)
     }
   )
-    
+  
+  # ===== ENZYME MODULE =====
+  
   output$dl_enzyme_template <- downloadHandler(
     filename = function() paste0(tolower(input$enzyme_type_nav), "_standards.csv"),
     content = function(file) {
@@ -956,7 +989,9 @@ Activity (U/mL) = µmol tyrosine released per minute per mL enzyme"
         write.csv(enzyme_activity_results(), file, row.names = FALSE)
       }
     )
-        
+    
+    # ===== PRODUCT CONCENTRATION MODULE =====
+    
     output$product_concentration_table <- renderDT({
       req(product_concentration_results())
       display_cols <- c("Sample_ID", "Microorganism", "Replicate", "Product_Conc", "Product_µmol")
@@ -974,6 +1009,7 @@ Activity (U/mL) = µmol tyrosine released per minute per mL enzyme"
       datatable(stats) %>% formatRound(columns = 2:5, digits = 4)
     })
     
+    # ===== SPECIFIC ACTIVITY MODULE =====
     
     observeEvent(input$calc_specific, {
       req(input$protein_for_specific, input$enzyme_for_specific)
@@ -1014,6 +1050,7 @@ Activity (U/mL) = µmol tyrosine released per minute per mL enzyme"
       }
     )
     
+    # ===== REPLICATION ANALYSIS MODULE =====
     
     output$protein_replication_table <- renderDT({
       req(protein_results())
@@ -1059,6 +1096,8 @@ Activity (U/mL) = µmol tyrosine released per minute per mL enzyme"
         cat(sprintf("%-20s CV=%5.2f%%  %s\n", stats$Microorganism[i], cv, quality))
       }
     })
+    
+    # ===== VISUALIZATION MODULE =====
     
     get_tukey_letters <- function(data) {
       if(n_distinct(data$Microorganism) < 2) return(NULL)
@@ -1194,6 +1233,7 @@ Activity (U/mL) = µmol tyrosine released per minute per mL enzyme"
         scale_fill_brewer(palette = "Spectral")
     })
     
+    # ===== STATISTICS =====
     
     output$quant_descriptive_stats <- renderPrint({
       req(specific_activity_results())
@@ -1226,6 +1266,8 @@ Activity (U/mL) = µmol tyrosine released per minute per mL enzyme"
       cat("TUKEY HSD TEST\n\n")
       print(TukeyHSD(model))
     })
+    
+    # ===== QUALITATIVE MODULE =====
     
     output$dl_qualitative_template <- downloadHandler(
       filename = "qualitative_zone.csv",
@@ -1312,4 +1354,6 @@ Activity (U/mL) = µmol tyrosine released per minute per mL enzyme"
   )
 
 }
+  # ===== LAUNCH =====
    shinyApp(ui = ui, server = server)
+
