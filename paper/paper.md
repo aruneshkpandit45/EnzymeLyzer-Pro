@@ -1,8 +1,5 @@
----
-
 title: "EnzymeLyzer Pro: An R/Shiny platform for quantitative enzyme assay analysis and visualization"
 tags:
-
 * R
 * Shiny
 * enzyme assay
