@@ -1,3 +1,5 @@
+---
+
 title: "EnzymeLyzer Pro: An R/Shiny platform for quantitative enzyme assay analysis and visualization"
 tags:
 
@@ -11,6 +13,16 @@ tags:
   affiliation: 1
   email: [akpandit.iari@gmail.com](mailto:akpandit.iari@gmail.com)
 * name: S. Subramanian
+  affiliation: 1
+* name: Raja Rushi
+  affiliation: 1
+* name: Sai Manoj Marella
+  affiliation: 1
+* name: Preeti Sharma
+  affiliation: 1
+* name: Pavan JS
+  affiliation: 1
+* name: Amit
   affiliation: 1
   affiliations:
 * name: ICAR-Indian Agricultural Research Institute (IARI), New Delhi, India
