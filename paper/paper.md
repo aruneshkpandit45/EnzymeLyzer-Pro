@@ -30,11 +30,14 @@ The application supports multi-replicate datasets and incorporates statistical a
 
 # Statement of Need
 
-Quantitative enzyme assays are widely used in microbiology, and biochemical research for evaluating enzymatic activity in biological systems. Standard experimental methods such as the Bradford protein assay (@bradford1976) and DNS-based reducing sugar estimation (@miller1959) are commonly employed for enzyme characterization.
+Quantitative enzyme assays are fundamental tools in microbiology and biochemical research for evaluating enzymatic activity in microbial isolates and biological systems. Standard experimental methods such as the Bradford protein assay (@bradford1976) and DNS-based reducing sugar estimation (@miller1959) are widely used; however, the downstream analysis of such data remains largely fragmented and manual.
 
-However, data analysis workflows typically involve multiple manual steps including spreadsheet-based calculations, statistical testing, and graphical visualization, which are time-consuming and prone to user error.
+Researchers typically rely on spreadsheet-based calculations, manual normalization, and separate statistical software to perform analyses such as ANOVA and post-hoc comparisons. This multi-step workflow is not only time-consuming but also increases the likelihood of calculation errors, inconsistencies in data handling, and lack of reproducibility across studies.
 
-Existing tools often lack integration of enzyme-specific analytical workflows, statistical validation, and protocol guidance within a single platform. EnzymeLyzer Pro addresses these limitations by providing an interactive and reproducible environment that automates calculations, supports replication-based analysis, and standardizes enzyme assay workflows.
+Despite the widespread use of enzyme assays, there is currently no dedicated, integrated platform that combines protein estimation, enzyme activity calculation, specific activity normalization, statistical validation, and visualization within a single reproducible environment. Existing tools either focus on isolated analytical steps or require programming expertise, creating barriers for researchers without computational backgrounds.
+
+EnzymeLyzer Pro addresses this gap by providing a unified, user-friendly platform that automates the complete enzyme assay analysis workflow. By integrating data processing, statistical analysis, and visualization with embedded experimental protocols, the tool enhances reproducibility, reduces analytical errors, and standardizes enzyme assay data analysis across laboratories.
+
 
 ---
 
